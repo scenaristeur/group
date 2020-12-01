@@ -1,11 +1,7 @@
 <template>
   <div>
     <div v-if="webId != null">
-      <b-list-group>
-        <b-list-group-item v-for="g in groups" :key="g.url" :to="{ path: '/group?url='+g.url}" >
-          {{ g.name || g.url}}
-        </b-list-group-item>
-      </b-list-group>
+      url : {{ url }}
     </div>
     <div v-else>Please login with a Solid webId to see your groups !</div>
   </div>
@@ -15,22 +11,25 @@
 import GroupMixin from '@/mixins/GroupMixin'
 
 export default {
-  name: 'UserGroups',
+  name: 'Group',
+  //props: ['url'],
   mixins: [GroupMixin],
+  created(){
+    console.log(this.$route)
+  },
   // data: function () {
   //   return {
-  //
-  //     }
-  //   },
+  //     url: "alo"
+  //   }
+  // },
   //   methods: {
   //
   //   },
   computed:{
-    groups:{
-      get: function() { return this.$store.state.groups},
+    url:{
+      get: function() { return this.$route.hash != undefined ? this.$route.query.url+this.$route.hash : this.$route.query.urll},
       set: function() {}
     },
-
   }
 
 }

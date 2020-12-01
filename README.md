@@ -42,6 +42,18 @@ npm run build && git add .
 git commit -m "my modif"
 git push && git subtree push --prefix dist origin gh-pages
 
+
+- create vue.config.js
+```
+const publicPath = process.env.NODE_ENV === 'production' ? '/group/' : '/'
+
+module.exports = {
+  // options...
+  publicPath: publicPath,
+  }
+  ```
+
+
 ### Build in dist folder & publish to gh-pages
 ```
 npm run git -- "new version"

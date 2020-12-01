@@ -10,9 +10,9 @@
       </b-form-group>
       <b-button @click="create" variant="primary">Créer</b-button>
       <p>
-      {{ group}}
-      {{ group_url}}
-    </p>
+        {{ group}}
+        {{ group_url}}
+      </p>
     </div>
     <div v-else>Please login with a Solid webId to create a group !</div>
   </div>
@@ -36,15 +36,34 @@ export default {
         group_url: null
       }
     },
+    created(){
+      if(this.$route.query.url != undefined){
+        this.group.super = this.$route.hash != undefined ? this.$route.query.url+this.$route.hash : this.$route.query.urll
+
+      }
+    },
     methods: {
       async create() {
         this.group.path = this.path
-        this.group_url = await this.createGroup(this.group)
+        let group_result  = await this.createGroup(this.group)
+        this.group_url = group_result.url
+        if(group_result.creation.status== "ok"){
+          this.$router.push('group?url='+this.group_url)
+        }
+      }
+    },
+    watch:{
+      url(){
+        this.group.super = this.url
       }
     },
     computed:{
       path:{
         get: function() { return this.$store.state.storage+this.group.privacy+'/'},
+        set: function() {}
+      },
+      url:{
+        get: function() { return this.$route.hash != undefined ? this.$route.query.url+this.$route.hash : this.$route.query.urll},
         set: function() {}
       },
 

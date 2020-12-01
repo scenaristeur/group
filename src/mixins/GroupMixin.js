@@ -43,7 +43,7 @@ export default {
         console.log(e)
       }
 
-      return group.url
+      return group
     },
   },
 

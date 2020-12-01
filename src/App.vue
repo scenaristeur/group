@@ -2,7 +2,10 @@
   <div id="app">
     <div id="nav">
       <router-link to="/">Home</router-link> |
-      <router-link to="/createGroup">New Group</router-link> |
+      <router-link v-if="url == 'undefined'" to="/createGroup">New Group</router-link>
+      <router-link v-else :to="'/createGroup?url='+url">New Sub-Group</router-link>
+
+       |
       <router-link to="/about">About</router-link>
       <SolidLoginButton />
     </div>
@@ -16,6 +19,12 @@ export default {
   components:{
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
+  },
+  computed:{
+    url:{
+      get: function() { return this.$route.hash != undefined ? this.$route.query.url+this.$route.hash : this.$route.query.urll},
+      set: function() {}
+    },
   }
 }
 </script>
