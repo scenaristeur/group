@@ -6,12 +6,13 @@
         <b-form-textarea size="lg" class="m-3" v-model="group.purpose" placeholder="Raison d'être"></b-form-textarea>
         <b-form-input  size="lg" class="m-3" v-model="group.super" placeholder="Super groupe"></b-form-input>
         <b-form-select v-model="group.privacy" :options="privacy_options"  size="lg" class="m-3"></b-form-select>
-        <b-form-input size="lg" class="m-3" v-model="group.path" placeholder="Chemin"></b-form-input>
+        <b-form-input size="lg" class="m-3" v-model="path" placeholder="Chemin"></b-form-input>
       </b-form-group>
       <b-button @click="create" variant="primary">Créer</b-button>
       <p>
+      {{ group}}
       {{ group_url}}
-    </p>   
+    </p>
     </div>
     <div v-else>Please login with a Solid webId to create a group !</div>
   </div>
@@ -37,8 +38,17 @@ export default {
     },
     methods: {
       async create() {
+        this.group.path = this.path
         this.group_url = await this.createGroup(this.group)
       }
+    },
+    computed:{
+      path:{
+        get: function() { return this.$store.state.storage+this.group.privacy+'/'},
+        set: function() {}
+      },
+
     }
+
   }
   </script>

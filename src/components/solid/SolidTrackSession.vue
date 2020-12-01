@@ -24,7 +24,7 @@ export default {
         this.webId = session.webId
         this.user = session.webId.split('/').slice(2,3)[0]
       }
-      this.$store.commit('setWebId', this.webId)
+      this.$store.dispatch('setWebId', this.webId)
     })
   },
 }
