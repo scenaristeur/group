@@ -5,8 +5,13 @@ Vue.use(Vuex)
 
 export default new Vuex.Store({
   state: {
+    webId: null
   },
   mutations: {
+    setWebId(state, webId){
+      console.log("webId",webId)
+      state.webId = webId
+    },
   },
   actions: {
   },
