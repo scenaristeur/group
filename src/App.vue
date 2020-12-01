@@ -11,6 +11,7 @@
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
+    0.0.2 - create subgroup
   </div>
 </template>
 <script>
