@@ -11,7 +11,7 @@
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
-    0.0.8 - 404b
+    0.0.9 - 404c
   </div>
 </template>
 <script>
