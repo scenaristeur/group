@@ -1,5 +1,17 @@
 <template>
   <div class=" container ">
+    <div class="nav">
+
+      <div class="m-2" v-if="sup != undefined">Super groupe: <b-button  :to="'/group?url='+sup" variant="outline-primary" size="sm">Go Super</b-button></div>
+      <div class="m-2" v-if="st.files != undefined && st.files.length > 0">
+        Sous Groupes: <b-button v-for="subgroup in st.files" :key="subgroup.url" :to="'/group?url='+subgroup.url+'#we'" variant="outline-info" size="sm">{{ subgroup.name}}</b-button>
+      </div>
+      <div class="m-2" v-if="st.folders != undefined && st.folders.length > 0">
+        Dossiers: <b-button v-for="subfolder in st.folders" :key="subfolder.url" :to="'/folder?url='+subfolder.url" variant="outline-primary" size="sm">{{ subfolder.name}}</b-button>
+      </div>
+    </div>
+
+
     <div class="row">
       <b-card
       img-src="https://picsum.photos/600/300/?image=25"
@@ -26,20 +38,14 @@
     <b-card-title><a :href="url" target="_blank">{{name}}</a></b-card-title>
     <b-card-header>{{ purpose }}</b-card-header>
     <b-card-text>
-      <b-button v-if="sup != undefined" :to="'/group?url='+sup" variant="primary">Go Super</b-button>
       <b-button v-if="inbox != undefined" :to="'/inbox?url='+inbox" variant="primary">Inbox</b-button>
 
       members: {{members}}<br>
-      subgroups: {{subgroups}}<br>
-    sup  {{ sup }}
+      <!-- subgroups: {{subgroups}}<br>
+      sup  {{ sup }} -->
     </b-card-text>
 
-    <b-button v-for="subfolder in st.folders" :key="subfolder.url" :to="'/group?url='+subfolder.url" variant="outline-primary">{{ subfolder.name}}</b-button>
-
-    <b-button v-for="subgroup in st.files" :key="subgroup.url" :to="'/group?url='+subgroup.url+'#we'" variant="primary">{{ subgroup.name}}</b-button>
-
-
-  created:   {{ created}}<br>   maker: {{ maker }}<br> storage: {{st}}<br>
+    created:   {{ created}}<br>   maker: {{ maker }}<br> storage: {{st}}<br>
   </b-card>
 </div>
 </div>

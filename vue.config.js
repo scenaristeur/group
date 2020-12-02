@@ -9,7 +9,7 @@ module.exports = {
   //https://github.com/nico-martin/todo-pwa
   //https://github.com/nico-martin/todo-pwa/blob/9ae64f77c622785e4be05bb1ce6ccfdbc96f43cc/vue/webpack.config.babel.js
   pwa: {
-    name: 'p-webid',
+    name: 'Solid Groups',
     //  themeColor: '#4DBA87',
     //  msTileColor: '#000000',
     appleMobileWebAppCapable: 'yes',
