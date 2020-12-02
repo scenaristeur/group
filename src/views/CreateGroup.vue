@@ -29,6 +29,7 @@ export default {
   },
   data: function () {
     return {
+      path: "",
       group:{privacy:"public"},
       privacy_options: [
         { value: 'public', text: 'Public. Tout le monde peut voir qui est dans le groupe et ce qui est publié' },
@@ -36,32 +37,47 @@ export default {
         group_url: null
       }
     },
-    created(){
+    async created(){
       if(this.$route.query.url != undefined){
-        this.group.super = this.$route.hash != undefined ? this.$route.query.url+this.$route.hash : this.$route.query.urll
-
+        this.setSuperAndPath(this.$route.query.url, this.$route.hash)
+      }else{
+        this.path = this.$store.state.storage+this.group.privacy+'/'
       }
     },
     methods: {
+      async setSuperAndPath(url, hash){
+        if(url != undefined){
+          this.group.super = hash != undefined ? url+hash : url
+          console.log(this.group.super)
+          let p = await this.getGroupStorage(this.group.super)
+          this.path = `${p}`
+          console.log(p)
+        }else{
+          this.path = this.$store.state.storage+this.group.privacy+'/'
+        }
+      },
       async create() {
         this.group.path = this.path
         let group_result  = await this.createGroup(this.group)
         this.group_url = group_result.url
         if(group_result.creation.status== "ok"){
-          this.$router.push('group?url='+this.group_url)
+          this.$router.push('group?url='+group_result.url+"#"+group_result.identifier)
         }
       }
     },
     watch:{
       url(){
         this.group.super = this.url
+      },
+      $route(to){
+        this.setSuperAndPath(to.query.url, to.hash)
       }
     },
     computed:{
-      path:{
-        get: function() { return this.$store.state.storage+this.group.privacy+'/'},
-        set: function() {}
-      },
+      // path:{
+      //   get: function() { return this.$store.state.storage+this.group.privacy+'/'},
+      //   set: function() {}
+      // },
       url:{
         get: function() { return this.$route.hash != undefined ? this.$route.query.url+this.$route.hash : this.$route.query.urll},
         set: function() {}

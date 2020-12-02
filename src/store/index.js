@@ -2,7 +2,7 @@ import Vue from 'vue'
 import Vuex from 'vuex'
 Vue.use(Vuex)
 
-let solid = window.solid
+let ldflex = window.solid
 
 export default new Vuex.Store({
   state: {
@@ -24,10 +24,10 @@ export default new Vuex.Store({
   actions: {
     async setWebId(context, webId){
       context.commit('setWebId',webId)
-      context.commit('setStorage', `${await solid.data[webId].storage}`)
+      context.commit('setStorage', `${await ldflex.data[webId].storage}`)
       let groups = []
-      for await (const group of solid.data[webId]['http://www.w3.org/ns/org#memberOf']){
-      let g = {url:`${group}`, name: await solid.data[`${group}`].vcard$fn}
+      for await (const group of ldflex.data[webId]['http://www.w3.org/ns/org#memberOf']){
+      let g = {url:`${group}`, name: await ldflex.data[`${group}`].vcard$fn}
         groups.push(g)
       }
         context.commit('setGroups',groups)

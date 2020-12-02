@@ -1,8 +1,9 @@
 <template>
   <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <UserGroups />
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+      <UserGroups />
+      <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
+
+      <HelloWorld msg="Welcome to Your Solid Group Management App"/>
   </div>
 </template>
 
