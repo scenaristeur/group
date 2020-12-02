@@ -11,7 +11,7 @@
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
-    0.0.5 - fix members
+    0.0.6 - fix quotes in names
   </div>
 </template>
 <script>

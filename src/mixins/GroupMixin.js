@@ -12,16 +12,18 @@ export default {
   },
   methods: {
     async createGroup(group){
-      let ttl_name = group.name.replace(/\s/g, '_')
+      console.log('todo formate a good url without single quotes...')
+
+      group.encoded_name = group.name.replace(/\s/g, '_').replace(/'/g,'_').replace(/"/g, "_") //encodeURI(group.name)//.replace(/'/g,'_')//
       group.path = !group.path.endsWith('/') ? group.path+'/' : group.path
       var dateObj = new Date();
       var date = dateObj.toISOString()
-      group.url = group.path+ttl_name+".ttl"
+      group.url = group.path+group.encoded_name+".ttl"
 
       group.identifier = 'we'
       group.maker = this.webId
-      group.inbox = "./"+ttl_name+"/inbox/"
-      group.storage = "./"+ttl_name+'/'
+      group.inbox = "./"+group.encoded_name+"/inbox/"
+      group.storage = "./"+group.encoded_name+'/'
       let groupDoc = await createDocument(group.url);
       let subj = groupDoc.addSubject({identifier:group.identifier})
       subj.addLiteral(vcard.fn, group.name)
@@ -37,7 +39,7 @@ export default {
       try{
         await groupDoc.save();
         group.creation = {status: "ok", message: "group created"}
-        await fc.createFolder(group.path+ttl_name+"/inbox/")
+        await fc.createFolder(group.path+group.encoded_name+"/inbox/")
         console.log("ok")
       }catch(e){
         console.log(e)
@@ -54,6 +56,21 @@ export default {
         alert(e)
         console.log(e)
       }
+
+      if (group.super!= undefined){
+        let superDoc = await fetchDocument(group.super)
+        let parent = superDoc.getSubject(group.super)
+        parent.addRef('http://www.w3.org/ns/org#hasSubOrganization', group.url+"#"+group.identifier)
+        try{
+          await superDoc.save();
+        }catch(e){
+          alert(e)
+          console.log(e)
+        }
+      }
+
+
+
       return group
     },
     async getGroupStorage(url){

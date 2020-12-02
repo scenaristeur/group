@@ -36,13 +36,14 @@
 
     class="m-2 col">
     <b-card-title><a :href="url" target="_blank">{{name}}</a></b-card-title>
+
     <b-button v-if="inbox != undefined" :to="'/inbox?url='+inbox" variant="outline-primary" size="sm">Inbox</b-button>
     <b-button :href="'https://scenaristeur.github.io/spoggy-simple?source='+url" variant="outline-primary" target="_blank" size="sm">Graphe</b-button>
-    <b-button :href="maker" variant="outline-primary" target="_blank" size="sm">Admin</b-button>
+    <b-button :to="'/profile?url='+maker" variant="outline-primary" size="sm">Admin</b-button>
 
     <b-card-header>
-
-      {{ purpose }}</b-card-header>
+      {{ purpose }}
+    </b-card-header>
       <b-card-text>
         <br>Members: <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm">Invite</b-button>
         <b-button :to="'/join?url='+url" variant="outline-primary" size="sm">Join</b-button>
@@ -53,9 +54,8 @@
         <!-- subgroups: {{subgroups}}<br>
         sup  {{ sup }} -->
       </b-card-text>
-
-      created:   {{ created}}<br>
-
+      <div v-if="subgroups.length > 0 " >sous groupes déclarés: {{ subgroups}}</div>
+<small>created:{{ created}}</small><br>
       <!-- storage: {{st}}<br> -->
     </b-card>
   </div>
@@ -83,7 +83,7 @@ export default {
       created: "",
       inbox: "",
       maker: "",
-      sup: "",
+      sup: undefined,
       members: "",
       st:"",
       subgroups: []
@@ -97,13 +97,19 @@ export default {
 
       this.inbox = await ldflex.data[this.url]['http://www.w3.org/ns/ldp#inbox']
 
-      this.maker  = await ldflex.data[this.url]['http://xmlns.com/foaf/0.1/maker']
+      let maker = await ldflex.data[this.url]['http://xmlns.com/foaf/0.1/maker']
+      this.maker = `${maker}`
       this.sup  = await ldflex.data[this.url]['http://www.w3.org/ns/org#subOrganizationOf']
 
       this.members = []
       for await (const member of ldflex.data[this.url]['http://www.w3.org/2006/vcard/ns#hasMember']){
         //  let g = {url:`${group}`, name: await ldflex.data[`${group}`].vcard$fn}
         this.members.push(`${member}`)
+      }
+      this.subgroups = []
+      for await (const sg of ldflex.data[this.url]['http://www.w3.org/ns/org#hasSubOrganization']){
+        //  let g = {url:`${group}`, name: await ldflex.data[`${group}`].vcard$fn}
+        this.subgroups.push(`${sg}`)
       }
       this.st = await this.getGroupStorage(this.url)
 
