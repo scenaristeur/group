@@ -49,9 +49,9 @@ export default {
         if(url != undefined){
           this.group.super = hash != undefined ? url+hash : url
           console.log(this.group.super)
-          let p = await this.getGroupStorage(this.group.super)
-          this.path = `${p}`
-          console.log(p)
+          let folder = await this.getGroupStorage(this.group.super)
+          this.path = `${folder.url}`
+          console.log(this.path)
         }else{
           this.path = this.$store.state.storage+this.group.privacy+'/'
         }
@@ -59,6 +59,7 @@ export default {
       async create() {
         this.group.path = this.path
         let group_result  = await this.createGroup(this.group)
+        console.log("group result",group_result)
         this.group_url = group_result.url
         if(group_result.creation.status== "ok"){
           this.$router.push('group?url='+group_result.url+"#"+group_result.identifier)

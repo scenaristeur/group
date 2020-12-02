@@ -33,22 +33,25 @@ export default {
       subj.addRef(rdf.type, vcard.Group)
       group.purpose != undefined ?subj.addLiteral('http://www.w3.org/ns/org#purpose', group.purpose) : ""
       group.super != undefined ? subj.addRef("http://www.w3.org/ns/org#subOrganizationOf", group.super) : ""
+      console.log("GROUP", group)
       try{
         await groupDoc.save();
         group.creation = {status: "ok", message: "group created"}
+        await fc.createFolder(group.path+ttl_name+"/inbox/")
         console.log("ok")
       }catch(e){
         console.log(e)
+        alert(e)
         group.creation = {status: "error", message: e}
       }
-      await fc.createFolder(group.inbox)
-      await fc.creatFolder(group.storage)
+
       let profileDoc = await fetchDocument(group.maker)
       let me = profileDoc.getSubject(group.maker)
       me.addRef('http://www.w3.org/ns/org#memberOf', group.url+"#"+group.identifier)
       try{
         await profileDoc.save();
       }catch(e){
+        alert(e)
         console.log(e)
       }
       return group

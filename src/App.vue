@@ -11,7 +11,7 @@
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
-    0.0.4 - group navigation
+    0.0.5 - fix members
   </div>
 </template>
 <script>
