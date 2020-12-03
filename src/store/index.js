@@ -22,7 +22,7 @@ export default new Vuex.Store({
 
     },
     setGroups(state, groups){
-      console.log(groups)
+    //  console.log(groups)
       state.groups = groups
     },
   },
@@ -34,7 +34,7 @@ export default new Vuex.Store({
         let groups = []
         console.log("TODO: remplacer par solid-client-js peut-il eviter les nombreux appels ?")
         for await (const group of ldflex.data[webId]['http://www.w3.org/ns/org#memberOf']){
-          console.log(`${group}`)
+        //  console.log(`${group}`)
           let g = {url:`${group}`, name: await ldflex.data[`${group}`].vcard$fn}
           groups.push(g)
           context.commit('setGroups',groups)

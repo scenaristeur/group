@@ -1,17 +1,17 @@
 <template>
   <div id="app">
     <div id="nav">
-      <router-link to="/">Home</router-link> |
-      <router-link v-if="url == 'undefined'" to="/createGroup">New Group</router-link>
-      <router-link v-else :to="'/createGroup?url='+url">New Sub-Group</router-link>
+      <router-link to="/">Accueil</router-link> |
+      <router-link v-if="url == 'undefined'" to="/createGroup">Nouveau Group</router-link>
+      <router-link v-else :to="'/createGroup?url='+url">Nouveau Sous-Group</router-link>
 
        |
-      <router-link to="/about">About</router-link>
+      <router-link to="/about">A Propos</router-link>
       <SolidLoginButton />
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
-    0.0.9 - 404c
+    0.0.10 - inbox
   </div>
 </template>
 <script>

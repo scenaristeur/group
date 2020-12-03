@@ -1,18 +1,40 @@
 <template>
-  <div class="home">
-    <img alt="Vue logo" src="../assets/logo.png">
-    <HelloWorld msg="Welcome to Your Vue.js App"/>
+  <div class="inbox">
+    Inbox
+
+
+
+h
+{{ folder}}-
+
+    {{ url}}
   </div>
 </template>
 
 <script>
-// @ is an alias to /src
-import HelloWorld from '@/components/HelloWorld.vue'
+import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc   = new FC( auth )
 
 export default {
-  name: 'Home',
+  name: 'Inbox',
   components: {
-    HelloWorld
+
+  },
+  created(){
+    this.update()
+  },
+  data: function () {
+    return {
+
+    }
+  },
+  methods: {
+    async update() {
+      this.url = this.$route.query.url
+      console.log(this.url)
+      this.folder = await fc.readFolder()
+    }
   }
 }
 </script>
