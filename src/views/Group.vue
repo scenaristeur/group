@@ -7,7 +7,16 @@
         Sous Groupes: <b-button v-for="subgroup in st.files" :key="subgroup.url" :to="'/group?url='+subgroup.url+'#we'" variant="outline-info" size="sm">{{ subgroup.name}}</b-button>
       </div>
       <div class="m-2" v-if="st.folders != undefined && st.folders.length > 0">
-        Dossiers: <b-button v-for="subfolder in st.folders" :key="subfolder.url" :to="'/folder?url='+subfolder.url" variant="outline-primary" size="sm">{{ subfolder.name}}</b-button>
+        Dossiers:
+
+        <b-button
+        v-for="subfolder in st.folders"
+        :key="subfolder.url"
+        :to=" subfolder.url.endsWith('/inbox/') ? '/inbox?url='+subfolder.url : '/folder?url='+subfolder.url"
+        variant="outline-primary"
+        size="sm">
+        <b-icon-mailbox v-if="subfolder.url.endsWith('/inbox/')"></b-icon-mailbox>
+        {{ subfolder.name}}</b-button>
       </div>
     </div>
 
@@ -37,7 +46,8 @@
     class="m-2 col">
     <b-card-title><a :href="url" target="_blank">{{name}}</a></b-card-title>
 
-    <b-button v-if="inbox != undefined" :to="'/inbox?url='+inbox" variant="outline-primary" size="sm">Inbox</b-button>
+    <b-button v-if="inbox != undefined" :to="'/inbox?url='+inbox" variant="outline-primary" size="sm">
+        <b-icon-mailbox></b-icon-mailbox> Inbox</b-button>
     <b-button :href="'https://scenaristeur.github.io/spoggy-simple?source='+url" variant="outline-primary" target="_blank" size="sm">Graphe</b-button>
     <b-button :to="'/profile?url='+maker" variant="outline-primary" size="sm">Admin</b-button>
 
@@ -146,7 +156,7 @@ export default {
         }
       }catch(e){
         console.log(e)
-          alert("Erreur"+e)
+        alert("Erreur"+e)
       }
 
     }

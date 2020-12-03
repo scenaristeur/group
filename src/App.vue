@@ -12,7 +12,7 @@
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
-    0.0.13 - read & delete join request
+    0.0.14 - join request & acceptance mail
   </div>
 </template>
 <script>

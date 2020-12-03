@@ -85,8 +85,8 @@
 
 
             <b-button-group class="float-right" v-if="thing.types.includes('https://www.w3.org/ns/activitystreams#Offer')">
-              <b-button variant="success" size="sm" @click="accept">Accepter</b-button>
-              <b-button variant="warning" size="sm" @click="decline">Refuser</b-button>
+              <b-button variant="success" size="sm" @click="action('accept')">Accepter</b-button>
+              <b-button variant="warning" size="sm" @click="action('decline')">Refuser</b-button>
             </b-button-group>
           </div>
 
@@ -235,7 +235,15 @@ export default {
         this.mail = {}
         this.opened = false
         this.update()
+        break;
+        case "accept":
+        this.mail.webId = this.webId
+        console.log(this.mail)
 
+        await this.accepte(this.mail)
+        break;
+        case "decline":
+        await this.decline(this.mail)
         break;
         case "chat":
 
