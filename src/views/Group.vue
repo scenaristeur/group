@@ -44,27 +44,31 @@
     <b-card-header>
       {{ purpose }}
     </b-card-header>
-      <b-card-text>
-        <br>Members: <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm">Invite</b-button>
-        <b-button :to="'/join?url='+url" variant="outline-primary" size="sm">Join</b-button>
-        <br>
-        <ul>
-          <li v-for="m in members" :key="m">{{m}}</li>
-        </ul>
-        <!-- subgroups: {{subgroups}}<br>
-        sup  {{ sup }} -->
-      </b-card-text>
-      <div v-if="subgroups.length > 0 " >sous groupes déclarés: {{ subgroups}}</div>
-<small>created:{{ created}}</small><br>
-      <!-- storage: {{st}}<br> -->
-    </b-card>
-  </div>
+    <b-card-text>
+      <br>Members: <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm">Invite</b-button>
+      <b-button @click="join_req" variant="outline-primary" size="sm">Join</b-button>
+      <br>
+      <ul>
+        <li v-for="m in members" :key="m">{{m}}</li>
+      </ul>
+      <!-- subgroups: {{subgroups}}<br>
+      sup  {{ sup }} -->
+    </b-card-text>
+    <div v-if="subgroups.length > 0 " >sous groupes déclarés: {{ subgroups}}</div>
+    <small>created:{{ created}}</small><br>
+    <!-- storage: {{st}}<br> -->
+  </b-card>
+</div>
 </div>
 </template>
 
 <script>
 import GroupMixin from '@/mixins/GroupMixin'
 let ldflex = window.solid
+import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc   = new FC( auth )
+import { v4 as uuidv4 } from 'uuid';
 
 export default {
   name: 'Group',
@@ -113,6 +117,30 @@ export default {
       }
       this.st = await this.getGroupStorage(this.url)
 
+    },
+    async join_req(){
+      //XHRPOSThttps://welcome.solidcommunity.net/groups/inbox/c17597e6-dd6e-4d7b-9343-362911038ad5/
+      let join_request = `@prefix :      <#> .
+      @prefix as:    <https://www.w3.org/ns/activitystreams#> .
+
+      :it
+      a as:Offer ;
+      as:actor <${this.webId}> ;
+      as:object :join ;
+      as:summary "${this.webId} asks to join the group" ;
+      as:target <${this.url}> .
+
+      :join
+      a as:Join ;
+      as:actor <${this.webId}> ;
+      as:object <${this.url}> ;
+      as:summary "${this.webId} joins group" .`
+
+      //  let join_path = this.inbox+"Requetes/"
+      let join_path = `${this.inbox}`+uuidv4()+'.ttl'
+      console.log("join_request", join_path, join_request)
+      let created = await fc.postFile(join_path, join_request, "text/turtle")
+      alert(created)
     }
   },
   watch:{

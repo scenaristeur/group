@@ -14,7 +14,7 @@
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
-    0.0.11 - inbox menu
+    0.0.12 - join request
   </div>
 </template>
 <script>
