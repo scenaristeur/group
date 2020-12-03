@@ -1,19 +1,11 @@
 <template>
   <div class="container">
-    <NavBar />
+    <NavBar :folder="folder"/>
     <div class="row">
 
-      <div class="col-3">
-        <b-button variant="warning" v-b-modal.modal-scrollable size="lg" class="m-3 rounded" >Nouveau Message</b-button>
-        <b-list-group>
-          <b-list-group-item href="#" active>Boîte de reception</b-list-group-item>
-          <b-list-group-item v-for="fo in folder.folders" :key="fo.url" href="#some-link">{{fo.name}}</b-list-group-item>
-          <b-list-group-item variant="danger" href="/inbox?url=https%3A%2F%2Fspoggy-test7.solidcommunity.net%2Fpublic%2Fdfcv%2Finbox%2F">Url test</b-list-group-item>
-          <b-list-group-item href="#foobar" disabled>Disabled link</b-list-group-item>
-        </b-list-group>
-      </div>
+      <InboxMenu class="col-3 d-lg-block d-none" :folder="folder" />
 
-      <div class="col-9">
+      <div class="col-12 col-lg-9">
 
         <div class="row">
           <div>
@@ -68,21 +60,21 @@
         <b>{{ mail.maker }}</b> <small><i>{{ mail.created}}</i></small>
       </div>
 
-  <b-button-group class="mx-auto col-2">
-    <b-button v-b-modal.modal-scrollable @click="action('repondre')">
-      <b-icon-vector-pen ></b-icon-vector-pen>
-    </b-button>
-      <b-dropdown>
+      <b-button-group class="mx-auto col-2">
+        <b-button v-b-modal.modal-scrollable @click="action('repondre')">
+          <b-icon-vector-pen ></b-icon-vector-pen>
+        </b-button>
+        <b-dropdown>
 
 
-        <template #button-content>
-          <small>...</small>
-        </template>
-        <!-- <b-dropdown-item href="#" >Répondre</b-dropdown-item> -->
-        <b-dropdown-item href="#" @click="action('chat')">Transférer au chat</b-dropdown-item>
-        <b-dropdown-item href="#" @click="action('wiki')">Transférer au wiki</b-dropdown-item>
-      </b-dropdown>
-  </b-button-group>
+          <template #button-content>
+            <small>...</small>
+          </template>
+          <!-- <b-dropdown-item href="#" >Répondre</b-dropdown-item> -->
+          <b-dropdown-item href="#" @click="action('chat')">Transférer au chat</b-dropdown-item>
+          <b-dropdown-item href="#" @click="action('wiki')">Transférer au wiki</b-dropdown-item>
+        </b-dropdown>
+      </b-button-group>
 
     </div>
 
@@ -98,7 +90,7 @@
 
 
 
-<b-modal id="modal-scrollable" title="Destinataires" @ok="send">
+<b-modal id="modal-scrollable" title="Destinataires" @ok="send" size="lg">
   <template #modal-header="{ close }">
     <h6>Nouveau message</h6>
     <b-button size="sm" variant="outline-danger" @click="close()">
@@ -107,10 +99,12 @@
   </template>
   <div class="container fluid">
     <div class="row">
+      <!-- POUR L'auto completion des destinataires en fonction des membres du groupe, des amis...
+      https://bootstrap-vue.org/docs/components/form-tags -->
       <label for="tags-basic">Destinataires</label>
-      <b-form-tags input-id="tags-basic" v-model="destinataires"
+      <b-form-tags input-id="tags-basic" v-model="destinataires" scrollable
       separator=" ,;"
-      placeholder="Ajoutez un nouveau destinataire en les séparant par une virgule ou un point virgule."></b-form-tags>
+      placeholder="Destinataires séparés par , ou ;"></b-form-tags>
     </div>
     <div class="row">
 
@@ -153,9 +147,9 @@
 
 </b-modal>
 
-<hr><hr>
+<!-- <hr><hr>
 {{ folder}}<br>
-{{ url}}
+{{ url}} -->
 </div>
 </template>
 
@@ -167,7 +161,8 @@ const fc   = new FC( auth )
 export default {
   name: 'Inbox',
   components: {
-    'NavBar': () => import('@/components/inbox/NavBar')
+    'NavBar': () => import('@/components/inbox/NavBar'),
+    'InboxMenu': () => import('@/components/inbox/InboxMenu')
   },
   async  created(){
     this.url = this.$route.query.url
@@ -181,7 +176,7 @@ export default {
       folder: {},
       opened: false,
       mail: {title: "titre", maker: "webbbbbid", content:"contenu ça fonctionne ?", created: ""},
-      destinataires: ['Tous les membres du groupe'],
+      destinataires: ['Tous les membres du groupe', 'Annonce groupe', 'Transmettre aux sous-groupes', 'Mes amis',  'Article Wiki', 'Message Chat'],
       message: {type: null, content: "Contenu du message"},
     }
   },

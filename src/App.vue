@@ -1,6 +1,9 @@
 <template>
   <div id="app">
+
+
     <div id="nav">
+
       <router-link to="/">Accueil</router-link> |
       <router-link v-if="url == 'undefined'" to="/createGroup">Nouveau Group</router-link>
       <router-link v-else :to="'/createGroup?url='+url">Nouveau Sous-Group</router-link>
@@ -11,7 +14,7 @@
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
-    0.0.10b - inbox
+    0.0.11 - inbox menu
   </div>
 </template>
 <script>
@@ -20,6 +23,7 @@ export default {
   components:{
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton'),
     'SolidTrackSession': () => import('@/components/solid/SolidTrackSession'),
+
   },
   computed:{
     url:{

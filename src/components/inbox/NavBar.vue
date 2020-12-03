@@ -1,6 +1,11 @@
 <template>
-    <div>
+  <div>
     <b-navbar toggleable="lg" type="dark" variant="info">
+      <b-button-group class="d-lg-none">
+      <b-button v-b-toggle.sidebar-1 variant="light" ><b-icon-mailbox></b-icon-mailbox></b-button>
+      <b-button variant="warning" v-b-modal.modal-scrollable ><b-icon-vector-pen></b-icon-vector-pen></b-button>
+    </b-button-group>
+
       <b-navbar-brand href="#">GroupMail</b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
@@ -36,6 +41,7 @@
         </b-navbar-nav>
       </b-collapse>
     </b-navbar>
+    <SideBar :folder="folder" />
   </div>
 </template>
 
@@ -46,7 +52,9 @@
 
 export default {
   name: 'NavBar',
+  props: ['folder'],
   components: {
+    'SideBar': () => import('@/components/inbox/SideBar'),
 
   },
   created(){
