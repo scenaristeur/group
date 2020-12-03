@@ -11,7 +11,7 @@
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
-    0.0.10 - inbox
+    0.0.10b - inbox
   </div>
 </template>
 <script>

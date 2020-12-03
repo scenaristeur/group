@@ -8,7 +8,7 @@
         <b-list-group>
           <b-list-group-item href="#" active>Boîte de reception</b-list-group-item>
           <b-list-group-item v-for="fo in folder.folders" :key="fo.url" href="#some-link">{{fo.name}}</b-list-group-item>
-          <b-list-group-item href="#">Action links are easy</b-list-group-item>
+          <b-list-group-item variant="danger" href="/inbox?url=https%3A%2F%2Fspoggy-test7.solidcommunity.net%2Fpublic%2Fdfcv%2Finbox%2F">Url test</b-list-group-item>
           <b-list-group-item href="#foobar" disabled>Disabled link</b-list-group-item>
         </b-list-group>
       </div>
