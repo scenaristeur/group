@@ -1,2 +1,2 @@
 (window["webpackJsonp"]=window["webpackJsonp"]||[]).push([["about"],{f820:function(t,e,a){"use strict";a.r(e);var n=function(){var t=this,e=t.$createElement;t._self._c;return t._m(0)},s=[function(){var t=this,e=t.$createElement,a=t._self._c||e;return a("div",{staticClass:"about"},[a("h1",[t._v("This is an about page")]),a("ul",[a("li",[a("a",{attrs:{href:"https://github.com/scenaristeur/group",target:"_blank"}},[t._v("source")])])])])}],r=a("2877"),u={},c=Object(r["a"])(u,n,s,!1,null,null,null);e["default"]=c.exports}}]);
-//# sourceMappingURL=about.b59be787.js.map
+//# sourceMappingURL=about.7397ffe2.js.map

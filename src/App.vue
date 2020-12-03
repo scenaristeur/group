@@ -5,16 +5,14 @@
     <div id="nav">
 
       <router-link to="/">Accueil</router-link> |
-      <router-link v-if="url == 'undefined'" to="/createGroup">Nouveau Group</router-link>
-      <router-link v-else :to="'/createGroup?url='+url">Nouveau Sous-Group</router-link>
-
-       |
+      <router-link v-if="url == 'undefined'" to="/createGroup">Nouveau Groupe</router-link>
+      <router-link v-else :to="'/createGroup?url='+url">Nouveau Sous-Groupe</router-link> |
       <router-link to="/about">A Propos</router-link>
       <SolidLoginButton />
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
-    0.0.12 - join request
+    0.0.13 - read & delete join request
   </div>
 </template>
 <script>

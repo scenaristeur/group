@@ -11,9 +11,9 @@
 </template>
 
 <script>
-import auth from 'solid-auth-client';
-import FC from 'solid-file-client'
-const fc   = new FC( auth )
+// import auth from 'solid-auth-client';
+// import FC from 'solid-file-client'
+// const fc   = new FC( auth )
 
 export default {
   name: 'InboxMenu',
@@ -31,9 +31,9 @@ export default {
   },
   methods: {
     async update() {
-      this.url = this.$route.query.url
-      console.log(this.url)
-      this.folder = await fc.readFolder()
+      // this.url = this.$route.query.url
+      // console.log(this.url)
+      // this.folder = await fc.readFolder(this.url)
     }
   }
 }

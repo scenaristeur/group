@@ -1,6 +1,6 @@
 {
   "name": "Group",
-  "version": "0.0.12",
+  "version": "0.0.13",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -10,6 +10,8 @@
     "postgit": "git push && git subtree push --prefix dist origin gh-pages"
   },
   "dependencies": {
+    "@inrupt/solid-client": "^1.2.0",
+    "@inrupt/vocab-common-rdf": "^0.6.3",
     "@solid/query-ldflex": "^2.11.3",
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.20.1",

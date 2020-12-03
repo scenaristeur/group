@@ -45,8 +45,8 @@
       {{ purpose }}
     </b-card-header>
     <b-card-text>
-      <br>Members: <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm">Invite</b-button>
-      <b-button @click="join_req" variant="outline-primary" size="sm">Join</b-button>
+      <br>Members: <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm">Inviter</b-button>
+      <b-button @click="join_req" variant="outline-primary" size="sm">Rejoindre</b-button>
       <br>
       <ul>
         <li v-for="m in members" :key="m">{{m}}</li>
@@ -138,9 +138,17 @@ export default {
 
       //  let join_path = this.inbox+"Requetes/"
       let join_path = `${this.inbox}`+uuidv4()+'.ttl'
-      console.log("join_request", join_path, join_request)
-      let created = await fc.postFile(join_path, join_request, "text/turtle")
-      alert(created)
+
+      try{
+        let created = await fc.postFile(join_path, join_request, "text/turtle")
+        if(created.ok == true){
+          alert("Demande envoyée")
+        }
+      }catch(e){
+        console.log(e)
+          alert("Erreur"+e)
+      }
+
     }
   },
   watch:{

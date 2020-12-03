@@ -28,6 +28,9 @@
           <b-button>Edit</b-button>
           <b-button>Undo</b-button>
           <b-button>Redo</b-button>
+          <b-button v-if="mail.url != undefined" variant="danger" @click="action('delete')">
+            <b-icon-trash ></b-icon-trash>
+          </b-button>
         </b-button-group>
         <!-- <b-button-group class="mx-1">
         <b-button>&rsaquo;</b-button>
@@ -41,11 +44,7 @@
 
   <b-list-group v-if="opened == false" class="scroll">
     <b-list-group-item v-for="fi in folder.files" :key="fi.url" @click="open(fi.url)" href="#" >{{fi.name}}</b-list-group-item>
-
-    <b-list-group-item href="#some-link">Awesome link</b-list-group-item>
-    <b-list-group-item href="#" >Link with active state</b-list-group-item>
-    <b-list-group-item href="#">Action links are easy</b-list-group-item>
-    <b-list-group-item href="#foobar">Disabled link</b-list-group-item>
+    <b-list-group-item v-if="folder.files != undefined && folder.files.length == 0">Aucun message</b-list-group-item>
   </b-list-group>
   <div v-else class="container fluid">
     <div class="row mb-3 mt-3">
@@ -61,12 +60,11 @@
       </div>
 
       <b-button-group class="mx-auto col-2">
+
         <b-button v-b-modal.modal-scrollable @click="action('repondre')">
           <b-icon-vector-pen ></b-icon-vector-pen>
         </b-button>
-        <b-dropdown>
-
-
+        <b-dropdown dropleft >
           <template #button-content>
             <small>...</small>
           </template>
@@ -79,11 +77,37 @@
     </div>
 
 
-    <div class="scroll">{{ mail.content }}</div>
+    <div class="scroll">
+      <b-list-group v-if="mail.things != undefined">
+        <b-list-group-item  v-for="thing in mail.things" :key="thing.internal_url">
+          <div>
+            {{ thing.internal_url}}
 
 
+            <b-button-group class="float-right" v-if="thing.types.includes('https://www.w3.org/ns/activitystreams#Offer')">
+              <b-button variant="success" size="sm" @click="accept">Accepter</b-button>
+              <b-button variant="warning" size="sm" @click="decline">Refuser</b-button>
+            </b-button-group>
+          </div>
+
+          <b-list-group style="clear: both;">
+            <b-list-group-item  v-for="(quad,i) in thing.quads" :key="'quad_'+i" size="sm">
+              <small>  {{localname(quad.subject.value)}} -> {{localname(quad.predicate.value)}} -->
+                {{ quad.object.termType == "NamedNode" ? localname(quad.object.value) : quad.object.value}}</small>
+              </b-list-group-item>
+            </b-list-group>
+
+
+          </b-list-group-item>
+        </b-list-group>
+
+        {{ mail.content }}
+
+      </div>
+
+
+    </div>
   </div>
-</div>
 
 </div>
 </div>
@@ -126,7 +150,10 @@
     </div> -->
 
   </div>
-  <b-textarea rows="12" placeholder="message"> {{ message.content }}</b-textarea>
+
+  <b-textarea rows="12" placeholder="message">
+    {{ message.content }}
+  </b-textarea>
 
 </div>
 
@@ -156,10 +183,14 @@
 <script>
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
-const fc   = new FC( auth )
+const fc = new FC( auth )
+import InboxMixin from '@/mixins/InboxMixin'
+import ConverterMixin from '@/mixins/ConverterMixin'
+
 
 export default {
   name: 'Inbox',
+  mixins: [InboxMixin, ConverterMixin],
   components: {
     'NavBar': () => import('@/components/inbox/NavBar'),
     'InboxMenu': () => import('@/components/inbox/InboxMenu')
@@ -181,6 +212,12 @@ export default {
     }
   },
   methods: {
+    async accept(){
+      //http://www.w3.org/2006/vcard/ns#hasMember
+    },
+    async decline(){
+
+    },
     async send(){
       this.message.destinataires = this.destinataires // A transformer en webIds
       console.log("Message",this.message)
@@ -192,6 +229,14 @@ export default {
         //  v-b-modal.modal-scrollable
 
         break;
+        case "delete":
+        console.log(this.mail.url)
+        await fc.deleteFile(this.mail.url)
+        this.mail = {}
+        this.opened = false
+        this.update()
+
+        break;
         case "chat":
 
         break;
@@ -201,7 +246,7 @@ export default {
         default:
 
       }
-      console.log(act)
+
     },
     async update() {
       console.log(this.url)
@@ -210,7 +255,9 @@ export default {
     async open(url){
       console.log(url)
       this.opened = true
-      //  this.mail = {}
+      this.mail = await this.getMail(url)
+      console.log("mail:",this.mail)
+
     }
   }
 }

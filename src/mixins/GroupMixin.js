@@ -39,7 +39,10 @@ export default {
       try{
         await groupDoc.save();
         group.creation = {status: "ok", message: "group created"}
-        await fc.createFolder(group.path+group.encoded_name+"/inbox/")
+        await fc.createFolder(group.path+group.encoded_name+"/inbox/Invitations/")
+        await fc.createFolder(group.path+group.encoded_name+"/inbox/Requetes/")
+        await fc.createFolder(group.path+group.encoded_name+"/inbox/Traites/")
+        await fc.createFolder(group.path+group.encoded_name+"/inbox/Corbeille/")
         console.log("ok")
       }catch(e){
         console.log(e)
