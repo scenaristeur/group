@@ -20,10 +20,11 @@
 
 <script>
 import GroupMixin from '@/mixins/GroupMixin'
+import ProfileMixin from '@/mixins/ProfileMixin'
 
 export default {
   name: 'CreateGroup',
-  mixins: [GroupMixin],
+  mixins: [GroupMixin, ProfileMixin],
   mounted(){
     this.$refs.name.focus()
   },

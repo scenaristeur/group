@@ -12,10 +12,11 @@
 
 <script>
 import GroupMixin from '@/mixins/GroupMixin'
+import ProfileMixin from '@/mixins/ProfileMixin'
 
 export default {
   name: 'UserGroups',
-  mixins: [GroupMixin],
+  mixins: [GroupMixin, ProfileMixin],
   // data: function () {
   //   return {
   //

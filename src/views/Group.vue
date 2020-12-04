@@ -92,6 +92,7 @@
 
 <script>
 import GroupMixin from '@/mixins/GroupMixin'
+import ProfileMixin from '@/mixins/ProfileMixin'
 let ldflex = window.solid
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
@@ -100,7 +101,7 @@ import { v4 as uuidv4 } from 'uuid';
 
 export default {
   name: 'Group',
-  mixins: [GroupMixin],
+  mixins: [GroupMixin, ProfileMixin],
   components: {
     'Cockpit': () => import('@/components/gouvernance/Cockpit')
   },

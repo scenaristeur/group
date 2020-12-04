@@ -35,6 +35,11 @@
 
 <script>
 import store from '@/store'
+import ProfileMixin from '@/mixins/ProfileMixin'
+import auth from 'solid-auth-client';
+import FC from 'solid-file-client'
+const fc = new FC( auth )
+
 
 export default {
   store,
@@ -43,6 +48,7 @@ export default {
   // components:{
   //   'ViewSelector': () => import('@/components/ViewSelector.vue'),
   // },
+    mixins: [ProfileMixin],
   async created(){
 
 this.update()
@@ -64,27 +70,39 @@ this.update()
     },
     async newItem() {
       let item = {id: this.itemCounter, name: this.block.type+"#_"+this.itemCounter, block: this.block}
-      item = await this.$add(item)
+    //  item = await this.add(item)
       console.log(item)
       this.items.push(item)
       this.itemCounter++
       this.$router.push({path:'/edit', query: {item: item}})
     },
     async update(){
-    //  console.log("BLOCK",this.block)
-      this.webId = this.$store.state.profile.profile.webId
       this.block.url = this.url
-      this.block.storage = await this.$getStorage(this.url)
+      this.block.storage = await this.getStorage(this.url)
       this.block.path = this.block.storage+this.block.type+"/"
-      this.folder = await this.$update(this.block)
-    //  console.log(this.folder)
-    }
+    //  this.folder = await this.updateList(this.block)
+    },
+    async updateList(liste){
+        console.log(liste.path)
+        let folder = {}
+        !await fc.itemExists(liste.path) ? fc.createFolder(liste.path) : ""
+        liste.path != undefined ? folder = await fc.readFolder(liste.path) : ""
+        return folder
+      },
+      // async add(item){
+      //     console.log(item)
+      //     console.log(this.CLASSES)
+      //     return item
+      //   },
+
+          async  getFolder(url){
+            //console.log("get folder",url)
+            let folder = await fc.readFolder(url)
+            return folder
+          },
 
   },
   watch:{
-    webId(){
-      console.log("watch webid", this.webId)
-    },
     url(){
       this.update()
     },
@@ -92,11 +110,5 @@ this.update()
       this.update()
     }
   },
-  computed:{
-    webId:{
-      get: function() { return this.$store.state.profile.profile.webId},
-      set: function() {}
-    },
-  }
 }
 </script>

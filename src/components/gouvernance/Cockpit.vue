@@ -93,9 +93,6 @@ export default {
 
   },
   props:['url'],
-  async created(){
-    this.webId = this.$store.state.profile.profile.webId
-  },
   data: function(){
     return {
       blocks: [
@@ -119,17 +116,6 @@ export default {
       console.log("block", b)
     }
   },
-  watch:{
-    webId(){
-      console.log("watch webid", this.webId)
-    }
-  },
-  computed:{
-    webId:{
-      get: function() { return this.$store.state.profile.profile.webId},
-      set: function() {}
-    },
-  }
 }
 </script>
 <style>

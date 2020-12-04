@@ -1,5 +1,6 @@
 import Vue from 'vue'
 import Vuex from 'vuex'
+import chat from './modules/chat'
 Vue.use(Vuex)
 
 let ldflex = window.solid
@@ -14,12 +15,10 @@ export default new Vuex.Store({
     setWebId(state, webId){
       console.log(webId)
       state.webId = webId
-
     },
     setStorage(state, storage){
         console.log(storage)
       state.storage = storage
-
     },
     setGroups(state, groups){
     //  console.log(groups)
@@ -48,5 +47,6 @@ export default new Vuex.Store({
     }
   },
   modules: {
+    chat,
   }
 })

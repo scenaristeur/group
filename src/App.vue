@@ -5,14 +5,14 @@
     <div id="nav">
 
       <router-link to="/">Accueil</router-link> |
-      <router-link v-if="url == 'undefined'" to="/createGroup">Nouveau Groupe</router-link>
-      <router-link v-else :to="'/createGroup?url='+url">Nouveau Sous-Groupe</router-link> |
+      <router-link v-if="url == 'undefined'" to="/createGroup">Nouveau GRoup</router-link>
+      <router-link v-else :to="'/createGroup?url='+url">Nouveau Sous-GRoup</router-link> |
       <router-link to="/about">A Propos</router-link>
       <SolidLoginButton />
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
-    0.0.16 - cockpit
+    0.0.17 - creation tensions
   </div>
 </template>
 <script>

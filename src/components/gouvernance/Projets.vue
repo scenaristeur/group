@@ -36,9 +36,6 @@ export default {
   // components:{
   //   'ViewSelector': () => import('@/components/ViewSelector.vue'),
   // },
-  async created(){
-    this.webId = this.$store.state.profile.profile.webId
-  },
   data: function(){
     return {
       projets: [],
@@ -57,16 +54,5 @@ export default {
       this.projets.push(this.projetCounter++)
     }
   },
-  watch:{
-    webId(){
-      console.log("watch webid", this.webId)
-    }
-  },
-  computed:{
-    webId:{
-      get: function() { return this.$store.state.profile.profile.webId},
-      set: function() {}
-    },
-  }
 }
 </script>

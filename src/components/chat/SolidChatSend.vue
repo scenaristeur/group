@@ -18,6 +18,7 @@
 </template>
 
 <script>
+import ProfileMixin from '@/mixins/ProfileMixin'
 import { fetchDocument } from 'tripledoc';
 import { sioc, dct, foaf } from 'rdf-namespaces' //
 const { namedNode } = require('@rdfjs/data-model');
@@ -29,6 +30,7 @@ const fc = new FC( auth )
 export default {
   name: 'SolidChatSend',
   props:['url'],
+    mixins: [ProfileMixin],
   components:{
     'SolidLoginButton': () => import('@/components/solid/SolidLoginButton')
 
@@ -55,14 +57,8 @@ computed:{
   fileUrl: function(){
     return  this.$store.state.chat.fileUrl
   },
-  webId(){
-    return this.$store.state.profile.profile.webId
-  }
 },
 watch:{
-  webId(webId){
-    console.log("Webid",webId)
-  },
   async  fileUrl(){
     if( !await fc.itemExists( this.fileUrl )) {
       await fc.postFile(this.fileUrl, "", "text/turtle")
@@ -80,11 +76,10 @@ methods: {
   async send(){
     // please refer to https://github.com/scenaristeur/shighl/blob/9b4b61d06d8a20f55de3f2aa580cbc5fb840d584/src/Shighl-chat.js#L214
     // and https://github.com/LDflex/LDflex/issues/53
-    let webId= this.$store.state.profile.profile.webId
     let root= this.url
 
     console.log(this.fileUrl)
-    if (this.message.length > 0 && webId != null)    {
+    if (this.message.length > 0 && this.webId != null)    {
       console.log(this.message)
       var dateObj = new Date();
       var messageId = "Msg"+dateObj.getTime()
@@ -93,7 +88,7 @@ methods: {
       /*  console.log(msgUrl)
       await solid.data[msgUrl].dct$created.add(date)
       await solid.data[msgUrl].sioc$content.add(this.message)*/
-      console.log("WEBID",this.$store.state.profile.profile.webId, this.fileUrl)
+      console.log("WEBID",this.webId, this.fileUrl)
 
       //let index = "this"
       //  let ind_prefix = "../../../index.ttl#" //" root+"/index.ttl#"
@@ -109,7 +104,7 @@ methods: {
       let subj =   chatDoc.addSubject({identifier:messageId})
       subj.addLiteral(sioc.content, this.message)
       subj.addLiteral(dct.created, date)
-      subj.addNodeRef(foaf.maker, webId)
+      subj.addNodeRef(foaf.maker, this.webId)
 
       /*  let indexSubj = chatDoc.addSubject({identifier: index, identifierPrefix: ind_prefix})
       indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())*/

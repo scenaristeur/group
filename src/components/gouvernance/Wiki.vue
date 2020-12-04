@@ -71,6 +71,8 @@
 import store from '@/store'
 import GroupMixin from '@/mixins/GroupMixin.js'
 import ConverterMixin from '@/mixins/ConverterMixin.js'
+import ProfileMixin from '@/mixins/ProfileMixin'
+
 
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
@@ -82,12 +84,11 @@ export default {
   store,
   name: 'Wiki',
   props: ['url'],
-  mixins: [GroupMixin, ConverterMixin],
+  mixins: [GroupMixin, ConverterMixin, ProfileMixin],
   // components:{
   //   'ViewSelector': () => import('@/components/ViewSelector.vue'),
   // },
   async created(){
-    this.webId = this.$store.state.profile.profile.webId
     this.update()
   },
   data: function(){
@@ -103,7 +104,7 @@ export default {
   methods: {
     async update(){
       console.log(this.url)
-      let storage = await this.$getStorage(this.url)
+      let storage = await this.getStorage(this.url)
       this.storage = `${storage}`+'wiki/'
       if( !(await fc.itemExists(this.storage)) ) {
         await fc.createFolder(this.storage) // only create if it doesn't already exist
@@ -128,19 +129,10 @@ export default {
     }
   },
   watch:{
-    webId(){
-      console.log("watch webid", this.webId)
-    },
     url(){
       this.update()
     }
   },
-  computed:{
-    webId:{
-      get: function() { return this.$store.state.profile.profile.webId},
-      set: function() {}
-    },
-  }
 }
 </script>
 <style>

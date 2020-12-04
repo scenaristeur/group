@@ -3,13 +3,10 @@ import { vcard, dct, foaf, ldp, /*rdfs,*/ rdf, space} from 'rdf-namespaces'
 let ldflex = window.solid
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
-const fc   = new FC( auth )
+const fc = new FC( auth )
+
 
 export default {
-  created(){
-    this.webId = this.$store.state.webId
-    this.storage = this.$store.state.storage
-  },
   methods: {
     async createGroup(group){
       console.log('todo formate a good url without single quotes...')
@@ -71,9 +68,6 @@ export default {
           console.log(e)
         }
       }
-
-
-
       return group
     },
     async getGroupStorage(url){
@@ -86,17 +80,6 @@ export default {
       }
       return folder
     },
-
   },
 
-  computed:{
-    webId:{
-      get: function() { return this.$store.state.webId},
-      set: function() {}
-    },
-    storage:{
-      get: function() { return this.$store.state.storage},
-      set: function() {}
-    },
-  }
 }

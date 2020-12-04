@@ -12,16 +12,15 @@ import { getSolidDataset,
   //getThing,
   getStringNoLocale,
 } from "@inrupt/solid-client";
-
+import ProfileMixin from '@/mixins/ProfileMixin'
 import { VCARD } from "@inrupt/vocab-common-rdf";
 
 export default {
   store,
   props: ['item'],
   name: 'Item',
-
+  mixins: [ProfileMixin],
   async created(){
-    this.webId = this.$store.state.profile.profile.webId
     this.update()
   },
   data: function(){
@@ -45,11 +44,5 @@ export default {
       console.log("watch webid", this.webId)
     }
   },
-  computed:{
-    webId:{
-      get: function() { return this.$store.state.profile.profile.webId},
-      set: function() {}
-    },
-  }
 }
 </script>

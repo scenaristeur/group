@@ -47,6 +47,7 @@ import infiniteScroll from 'vue-infinite-scroll'
 import { fetchDocument } from 'tripledoc';
 import { sioc, dct, foaf } from 'rdf-namespaces'
 import GroupMixin from '@/mixins/GroupMixin.js'
+import ProfileMixin from '@/mixins/ProfileMixin'
 import auth from 'solid-auth-client';
 import FC from 'solid-file-client'
 const fc = new FC( auth )
@@ -57,7 +58,7 @@ const fc = new FC( auth )
 export default {
   name: 'SolidChatList',
   directives: {infiniteScroll},
-  mixins: [GroupMixin],
+  mixins: [GroupMixin, ProfileMixin],
   props: ['url'],
   components: {
     'SolidChatSend' :  () => import ( '@/components/chat/SolidChatSend' ),
@@ -101,7 +102,7 @@ export default {
   methods:{
     async update(){
     //  console.log(this.url)
-      let storage = await this.$getStorage(this.url)
+      let storage = await this.getStorage(this.url)
       this.storage = `${storage}`+'chat/'
       let index = this.storage+'index.ttl'
       if( !(await fc.itemExists(index)) ) {
