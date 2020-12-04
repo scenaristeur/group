@@ -1,6 +1,6 @@
 {
   "name": "Group",
-  "version": "0.0.15",
+  "version": "0.0.16",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -24,6 +24,7 @@
     "tripledoc": "^4.4.0",
     "uuid": "^8.3.1",
     "vue": "^2.6.12",
+    "vue-infinite-scroll": "^2.0.2",
     "vue-router": "^3.2.0",
     "vue-sidebar-menu": "^4.7.4",
     "vuex": "^3.4.0"

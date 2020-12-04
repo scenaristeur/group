@@ -12,7 +12,7 @@
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
-    0.0.15 - inbox folders
+    0.0.16 - cockpit
   </div>
 </template>
 <script>

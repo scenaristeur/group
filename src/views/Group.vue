@@ -1,53 +1,56 @@
 <template>
-  <div class=" container ">
+  <div class=" container fluid">
     <div class="nav">
 
-      <div class="m-2" v-if="sup != undefined">Super groupe: <b-button  :to="'/group?url='+sup" variant="outline-primary" size="sm">Go Super</b-button></div>
+      <b-button v-if="sup != undefined"
+      :to="'/group?url='+sup"
+      variant="outline-primary"
+      size="sm">Super GRoup</b-button>
       <div class="m-2" v-if="st.files != undefined && st.files.length > 0">
-        Sous Groupes: <b-button v-for="subgroup in st.files" :key="subgroup.url" :to="'/group?url='+subgroup.url+'#we'" variant="outline-info" size="sm">{{ subgroup.name}}</b-button>
-      </div>
-      <div class="m-2" v-if="st.folders != undefined && st.folders.length > 0">
-        Dossiers:
 
-        <b-button
-        v-for="subfolder in st.folders"
+        <b-dropdown id="dropdown-sg" text="Sous-GRoups" class="m-md-2" size="sm">
+          <b-dropdown-item
+          v-for="subgroup in st.files"
+          :key="subgroup.url"
+          :to="'/group?url='+subgroup.url+'#we'"
+          variant="outline-info"
+          size="sm">
+          {{ subgroup.name}}
+        </b-dropdown-item>
+      </b-dropdown>
+
+
+
+
+    </div>
+    <div class="m-2" v-if="st.folders != undefined && st.folders.length > 0">
+
+      <b-dropdown id="dropdown-dossiers" text="Dossiers" class="m-md-2" size="sm">
+        <b-dropdown-item v-for="subfolder in st.folders"
         :key="subfolder.url"
         :to=" subfolder.url.endsWith('/inbox/') ? '/inbox?url='+subfolder.url : '/folder?url='+subfolder.url"
         variant="outline-primary"
         size="sm">
         <b-icon-mailbox v-if="subfolder.url.endsWith('/inbox/')"></b-icon-mailbox>
-        {{ subfolder.name}}</b-button>
-      </div>
+        {{ subfolder.name}}</b-dropdown-item>
+      </b-dropdown>
+
     </div>
+  </div>
 
 
-    <div class="row">
-      <b-card
-      img-src="https://picsum.photos/600/300/?image=25"
-      img-alt="Image"
-      img-top
-      tag="article"
+  <div class="row">
 
-      class="m-2">
-      <b-card-title><a :href="url" target="_blank">{{name}}</a></b-card-title>
-      <b-card-header>{{ purpose }}</b-card-header>
-      <b-card-text>
-        Some quick example text to build on the card title and make up the bulk of the card's content.
-      </b-card-text>
+  <b-card
+  img-src="https://picsum.photos/600/300/?image=25"
+  img-alt="Image"
+  img-top
+  tag="article"
+  class="m-2 col">
+  <b-card-title><a :href="url" target="_blank">{{name}}</a></b-card-title>
 
-      <b-button href="#" variant="primary">Go somewhere</b-button>
-    </b-card>
-    <b-card
-    img-src="https://picsum.photos/600/300/?image=25"
-    img-alt="Image"
-    img-top
-    tag="article"
-
-    class="m-2 col">
-    <b-card-title><a :href="url" target="_blank">{{name}}</a></b-card-title>
-
-    <b-button v-if="inbox != undefined" :to="'/inbox?url='+inbox" variant="outline-primary" size="sm">
-        <b-icon-mailbox></b-icon-mailbox> Inbox</b-button>
+  <b-button v-if="inbox != undefined" :to="'/inbox?url='+inbox" variant="outline-primary" size="sm">
+    <b-icon-mailbox></b-icon-mailbox> Inbox</b-button>
     <b-button :href="'https://scenaristeur.github.io/spoggy-simple?source='+url" variant="outline-primary" target="_blank" size="sm">Graphe</b-button>
     <b-button :to="'/profile?url='+maker" variant="outline-primary" size="sm">Admin</b-button>
 
@@ -55,7 +58,10 @@
       {{ purpose }}
     </b-card-header>
     <b-card-text>
-      <br>Members: <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm">Inviter</b-button>
+      <h5>Members</h5>
+      <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm" disabled >Inviter</b-button>
+      <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm" disabled >Partager</b-button>
+
       <b-button @click="join_req" variant="outline-primary" size="sm">Rejoindre</b-button>
       <br>
       <ul>
@@ -68,6 +74,18 @@
     <small>created:{{ created}}</small><br>
     <!-- storage: {{st}}<br> -->
   </b-card>
+
+
+  <b-card
+  tag="article"
+  class="m-2 col-12 col-lg-8">
+  <b-card-title><a :href="url" target="_blank">{{name}}</a> <small><i>Cockpit</i></small></b-card-title>
+  <Cockpit :url="url"/>
+
+  <b-button href="#" variant="primary">Go somewhere</b-button>
+</b-card>
+
+
 </div>
 </div>
 </template>
@@ -83,6 +101,9 @@ import { v4 as uuidv4 } from 'uuid';
 export default {
   name: 'Group',
   mixins: [GroupMixin],
+  components: {
+    'Cockpit': () => import('@/components/gouvernance/Cockpit')
+  },
   created(){
     if(this.$route.query.url != undefined){
       this.url = this.$route.hash != undefined? this.$route.query.url+this.$route.hash : this.$route.query
