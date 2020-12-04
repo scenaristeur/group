@@ -3,7 +3,7 @@
       <UserGroups />
       <!-- <img alt="Vue logo" src="../assets/logo.png"> -->
 
-      <HelloWorld msg="Bienvenue sur Ton application Group !"/>
+      <HelloWorld />
   </div>
 </template>
 

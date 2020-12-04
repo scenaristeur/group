@@ -12,7 +12,7 @@
     </div>
     <router-view class="container"/>
     <SolidTrackSession />
-    0.0.14 - join request & acceptance mail
+    0.0.15 - inbox folders
   </div>
 </template>
 <script>

@@ -147,7 +147,7 @@ export default {
       as:summary "${this.webId} joins group" .`
 
       //  let join_path = this.inbox+"Requetes/"
-      let join_path = `${this.inbox}`+uuidv4()+'.ttl'
+      let join_path = `${this.inbox}`+'Requetes/'+uuidv4()+'.ttl'
 
       try{
         let created = await fc.postFile(join_path, join_request, "text/turtle")

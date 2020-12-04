@@ -1,115 +1,116 @@
 <template>
   <div class="container">
-    <NavBar :folder="folder"/>
-    <div class="row">
+    <div v-if="webId != null">
+      <NavBar :folder="folder"/>
+      <div class="row">
 
-      <InboxMenu class="col-3 d-lg-block d-none" :folder="folder" />
+        <InboxMenu class="col-3 d-lg-block d-none" :folder="folder" />
 
-      <div class="col-12 col-lg-9">
+        <div class="col-12 col-lg-9">
 
-        <div class="row">
-          <div>
-            <!-- <div class="h2 mb-0">
-            <b-icon-arrow-up></b-icon-arrow-up>
-            <b-icon-exclamation-triangle-fill></b-icon-exclamation-triangle-fill>
-          </div> -->
-          <b-button-toolbar key-nav aria-label="Toolbar with button groups">
-            <!-- <b-button-group class="mx-1">
-            <b-button>&laquo;</b-button>
-            <b-button>&lsaquo;</b-button>
-          </b-button-group> -->
-          <b-button-group class="mx-1">
-            <b-button v-if="opened == true"
-            @click="opened = false"
-            class="h2 mb-0"
-            variant="light">
-            <b-icon-arrow-left ></b-icon-arrow-left>
+          <div class="row">
+            <div>
+              <!-- <div class="h2 mb-0">
+              <b-icon-arrow-up></b-icon-arrow-up>
+              <b-icon-exclamation-triangle-fill></b-icon-exclamation-triangle-fill>
+            </div> -->
+            <b-button-toolbar key-nav aria-label="Toolbar with button groups">
+              <!-- <b-button-group class="mx-1">
+              <b-button>&laquo;</b-button>
+              <b-button>&lsaquo;</b-button>
+            </b-button-group> -->
+            <b-button-group class="mx-1">
+              <b-button v-if="opened == true"
+              @click="opened = false"
+              class="h2 mb-0"
+              variant="light">
+              <b-icon-arrow-left ></b-icon-arrow-left>
+            </b-button>
+            <b-button>Edit</b-button>
+            <b-button>Undo</b-button>
+            <b-button>Redo</b-button>
+            <b-button v-if="mail.url != undefined" variant="danger" @click="action('delete')">
+              <b-icon-trash ></b-icon-trash>
+            </b-button>
+          </b-button-group>
+          <!-- <b-button-group class="mx-1">
+          <b-button>&rsaquo;</b-button>
+          <b-button>&raquo;</b-button>
+        </b-button-group> -->
+      </b-button-toolbar>
+    </div>
+  </div>
+
+  <div class="col">
+
+    <b-list-group v-if="opened == false" class="scroll">
+      <b-list-group-item v-for="fi in folder.files" :key="fi.url" @click="open(fi.url)" href="#" >{{fi.name}}</b-list-group-item>
+      <b-list-group-item v-if="folder.files != undefined && folder.files.length == 0">Aucun message</b-list-group-item>
+    </b-list-group>
+    <div v-else class="container fluid">
+      <div class="row mb-3 mt-3">
+        <div class="col"><h5>{{ mail.title }}</h5></div>
+        <div class="col-1">
+          <button type="button" aria-label="Close" class="close" @click="opened = false">X</button>
+        </div>
+      </div>
+      <div  class="row w-100">
+
+        <div class="col">
+          <b>{{ mail.maker }}</b> <small><i>{{ mail.created}}</i></small>
+        </div>
+
+        <b-button-group class="mx-auto col-2">
+
+          <b-button v-b-modal.modal-scrollable @click="action('repondre')">
+            <b-icon-vector-pen ></b-icon-vector-pen>
           </b-button>
-          <b-button>Edit</b-button>
-          <b-button>Undo</b-button>
-          <b-button>Redo</b-button>
-          <b-button v-if="mail.url != undefined" variant="danger" @click="action('delete')">
-            <b-icon-trash ></b-icon-trash>
-          </b-button>
+          <b-dropdown dropleft >
+            <template #button-content>
+              <small>...</small>
+            </template>
+            <!-- <b-dropdown-item href="#" >Répondre</b-dropdown-item> -->
+            <b-dropdown-item href="#" @click="action('chat')">Transférer au chat</b-dropdown-item>
+            <b-dropdown-item href="#" @click="action('wiki')">Transférer au wiki</b-dropdown-item>
+          </b-dropdown>
         </b-button-group>
-        <!-- <b-button-group class="mx-1">
-        <b-button>&rsaquo;</b-button>
-        <b-button>&raquo;</b-button>
-      </b-button-group> -->
-    </b-button-toolbar>
+
+      </div>
+
+
+      <div class="scroll">
+        <b-list-group v-if="mail.things != undefined">
+          <b-list-group-item  v-for="thing in mail.things" :key="thing.internal_url">
+            <div>
+              {{ thing.internal_url}}
+
+
+              <b-button-group class="float-right" v-if="thing.types.includes('https://www.w3.org/ns/activitystreams#Offer')">
+                <b-button variant="success" size="sm" @click="action('accept')">Accepter</b-button>
+                <b-button variant="warning" size="sm" @click="action('decline')">Refuser</b-button>
+              </b-button-group>
+            </div>
+
+            <b-list-group style="clear: both;">
+              <b-list-group-item  v-for="(quad,i) in thing.quads" :key="'quad_'+i" size="sm">
+                <small>  {{localname(quad.subject.value)}} -> {{localname(quad.predicate.value)}} -->
+                  {{ quad.object.termType == "NamedNode" ? localname(quad.object.value) : quad.object.value}}</small>
+                </b-list-group-item>
+              </b-list-group>
+
+
+            </b-list-group-item>
+          </b-list-group>
+
+          {{ mail.content }}
+
+        </div>
+
+
+      </div>
+    </div>
+
   </div>
-</div>
-
-<div class="col">
-
-  <b-list-group v-if="opened == false" class="scroll">
-    <b-list-group-item v-for="fi in folder.files" :key="fi.url" @click="open(fi.url)" href="#" >{{fi.name}}</b-list-group-item>
-    <b-list-group-item v-if="folder.files != undefined && folder.files.length == 0">Aucun message</b-list-group-item>
-  </b-list-group>
-  <div v-else class="container fluid">
-    <div class="row mb-3 mt-3">
-      <div class="col"><h5>{{ mail.title }}</h5></div>
-      <div class="col-1">
-        <button type="button" aria-label="Close" class="close" @click="opened = false">X</button>
-      </div>
-    </div>
-    <div  class="row w-100">
-
-      <div class="col">
-        <b>{{ mail.maker }}</b> <small><i>{{ mail.created}}</i></small>
-      </div>
-
-      <b-button-group class="mx-auto col-2">
-
-        <b-button v-b-modal.modal-scrollable @click="action('repondre')">
-          <b-icon-vector-pen ></b-icon-vector-pen>
-        </b-button>
-        <b-dropdown dropleft >
-          <template #button-content>
-            <small>...</small>
-          </template>
-          <!-- <b-dropdown-item href="#" >Répondre</b-dropdown-item> -->
-          <b-dropdown-item href="#" @click="action('chat')">Transférer au chat</b-dropdown-item>
-          <b-dropdown-item href="#" @click="action('wiki')">Transférer au wiki</b-dropdown-item>
-        </b-dropdown>
-      </b-button-group>
-
-    </div>
-
-
-    <div class="scroll">
-      <b-list-group v-if="mail.things != undefined">
-        <b-list-group-item  v-for="thing in mail.things" :key="thing.internal_url">
-          <div>
-            {{ thing.internal_url}}
-
-
-            <b-button-group class="float-right" v-if="thing.types.includes('https://www.w3.org/ns/activitystreams#Offer')">
-              <b-button variant="success" size="sm" @click="action('accept')">Accepter</b-button>
-              <b-button variant="warning" size="sm" @click="action('decline')">Refuser</b-button>
-            </b-button-group>
-          </div>
-
-          <b-list-group style="clear: both;">
-            <b-list-group-item  v-for="(quad,i) in thing.quads" :key="'quad_'+i" size="sm">
-              <small>  {{localname(quad.subject.value)}} -> {{localname(quad.predicate.value)}} -->
-                {{ quad.object.termType == "NamedNode" ? localname(quad.object.value) : quad.object.value}}</small>
-              </b-list-group-item>
-            </b-list-group>
-
-
-          </b-list-group-item>
-        </b-list-group>
-
-        {{ mail.content }}
-
-      </div>
-
-
-    </div>
-  </div>
-
-</div>
 </div>
 
 
@@ -173,7 +174,8 @@
 </template>
 
 </b-modal>
-
+</div>
+  <div v-else>Please login with a Solid webId to create a group !</div>
 <!-- <hr><hr>
 {{ folder}}<br>
 {{ url}} -->
@@ -267,6 +269,19 @@ export default {
       console.log("mail:",this.mail)
 
     }
+  },
+  watch:{
+    url(){
+    console.log(this.url)
+    this.update()
+  }
+
+  },
+  computed:{
+    url:{
+      get: function() { return this.$route.hash != undefined ? this.$route.query.url+this.$route.hash : this.$route.query.urll},
+      set: function() {}
+    },
   }
 }
 </script>

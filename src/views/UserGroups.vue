@@ -7,7 +7,6 @@
         </b-list-group-item>
       </b-list-group>
     </div>
-    <div v-else>Please login with a Solid webId to see your groups !</div>
   </div>
 </template>
 
