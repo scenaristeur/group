@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="webId != null">
-      <!-- <NavBar :url="url" :folder="folder" /> -->
+      <NavBar :url="url" :folder="folder" />
       <div class="row">
 
         <InboxMenu class="col-3 d-lg-block d-none" :folder="folder" />
@@ -194,7 +194,7 @@ export default {
   name: 'Inbox',
   mixins: [InboxMixin, ConverterMixin],
   components: {
-    // 'NavBar': () => import('@/components/inbox/NavBar'),
+    'NavBar': () => import('@/components/inbox/NavBar'),
     'InboxMenu': () => import('@/components/inbox/InboxMenu')
   },
   async  created(){

@@ -1,6 +1,9 @@
 <template>
   <div>
     <div v-if="webId != null">
+
+      <div v-if="groups.length > 0">{{ groups.length }} GRoups.</div>
+
       <b-list-group>
         <b-list-group-item v-for="g in groups" :key="g.url" :to="{ path: '/group?url='+g.url}" >
           {{ g.name || g.url}}
