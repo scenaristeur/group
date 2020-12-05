@@ -10,9 +10,16 @@
       <router-link to="/about">A Propos</router-link>
       <SolidLoginButton />
     </div>
+    <a href="https://www.patreon.com/smag0" target="_blank">
+      <img src="./assets/patreon.png" width="100px"/><br>
+      Soutenir GRoup
+    </a>
     <router-view class="container"/>
+
     <SolidTrackSession />
-    0.0.17 - creation tensions
+
+    <hr>
+    0.0.18 - tensions, actions, patreon
   </div>
 </template>
 <script>

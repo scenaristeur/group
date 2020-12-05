@@ -13,17 +13,12 @@ export default {
   methods: {
     async getStorage(url){
       let res = url.endsWith('#we') || url.endsWith('#this') ? url : url+'#we'
-      console.log("REEEES",res)
       let storage = await ldflex.data[res].storage
-      console.log(`${storage}`)
       if (`${storage}` == undefined){
         var path = this.url.substring(0,this.url.lastIndexOf("/"))
         let name = await ldflex.data[res].vcard$fn
-
         let ttl_name = `${name}`.trim().replace(/\s/g, '_')
-        console.log(`${name}`, this.url, ttl_name)
         storage = [path, ttl_name, ""].join('/')
-        console.log(storage)
         await !fc.itemExists(this.storage) ? await fc.createFolder(this.storage) : ""
         await ldflex.data[res]['http://www.w3.org/ns/pim/space#storage'].set(namedNode(storage))
       }

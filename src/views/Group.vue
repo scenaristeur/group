@@ -1,5 +1,5 @@
 <template>
-  <div class=" container fluid">
+  <div class="container fluid">
     <div class="nav">
 
       <b-button v-if="sup != undefined"
@@ -67,24 +67,11 @@
       <ul>
         <li v-for="m in members" :key="m">{{m}}</li>
       </ul>
-      <!-- subgroups: {{subgroups}}<br>
-      sup  {{ sup }} -->
     </b-card-text>
-    <div v-if="subgroups.length > 0 " >sous groupes déclarés: {{ subgroups}}</div>
-    <small>created:{{ created}}</small><br>
-    <!-- storage: {{st}}<br> -->
+
   </b-card>
 
-
-  <b-card
-  tag="article"
-  class="m-2 col-12 col-lg-8">
-  <b-card-title><a :href="url" target="_blank">{{name}}</a> <small><i>Cockpit</i></small></b-card-title>
-  <Cockpit :url="url"/>
-
-  <b-button href="#" variant="primary">Go somewhere</b-button>
-</b-card>
-
+  <Cockpit class="col-12 col-lg-9" :url="url"/>
 
 </div>
 </div>

@@ -11,7 +11,10 @@
           <b>GRoup</b> s'appuie sur les résultats de recherches récentes dans plusieurs domaines de la gouvernance partagée.
           <!-- <a href="https://cli.vuejs.org" target="_blank" rel="noopener">vue-cli documentation</a>. -->
         </p>
-        <b-button variant="dark" to="/createGroup" size="lg"><b>Créer un GRoup</b></b-button>
+        <b-button variant="dark" to="/createGroup" size="lg" class="m-3"><b>Créer un GRoup</b></b-button>
+        <b-button variant=dark size="lg" href="https://www.patreon.com/smag0" target="_blank"  class="m-3">
+          Soutenir GRoup sur <img src="../assets/patreon.png" width="100px"/>
+        </b-button>
       </b-jumbotron>
     </div>
 
@@ -77,7 +80,7 @@
               <h3>Prêt à tenter l'aventure ? </h3>
 
               <b-button variant="dark" to="/createGroup" size="lg"><b>Créer un GRoup</b></b-button>
-<p class="m-3">.</p>
+              <p class="m-3">.</p>
             </div>
           </template>
 
