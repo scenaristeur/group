@@ -19,7 +19,7 @@
     <SolidTrackSession />
 
     <hr>
-    0.0.18 - tensions, actions, patreon
+    0.0.19 - fix path of createGroup
   </div>
 </template>
 <script>

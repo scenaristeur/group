@@ -83,6 +83,7 @@ export default {
     async update(){
       this.block.url = this.url
       this.block.storage = await this.getStorage(this.url)
+      console.log("apres")
       this.block.path = this.block.storage+this.block.type+"/"
       !await fc.itemExists(this.block.path) ? fc.createFolder(this.block.path) : ""
       this.folder = await fc.readFolder(this.block.path)

@@ -26,11 +26,11 @@ export default {
   name: 'CreateGroup',
   mixins: [GroupMixin, ProfileMixin],
   mounted(){
-    this.$refs.name.focus()
+    //this.$refs.name.focus()
   },
   data: function () {
     return {
-      path: "",
+    //  path: "",
       group:{privacy:"public"},
       privacy_options: [
         { value: 'public', text: 'Public. Tout le monde peut voir qui est dans le groupe et ce qui est publié' },
@@ -39,11 +39,7 @@ export default {
       }
     },
     async created(){
-      if(this.$route.query.url != undefined){
-        this.setSuperAndPath(this.$route.query.url, this.$route.hash)
-      }else{
-        this.path = this.$store.state.storage+this.group.privacy+'/'
-      }
+    this.update()
     },
     methods: {
       async setSuperAndPath(url, hash){
@@ -65,6 +61,13 @@ export default {
         if(group_result.creation.status== "ok"){
           this.$router.push('group?url='+group_result.url+"#"+group_result.identifier)
         }
+      },
+      update(){
+        if(this.$route.query.url != undefined){
+          this.setSuperAndPath(this.$route.query.url, this.$route.hash)
+        }else{
+          this.path = this.storage+this.group.privacy+'/'
+        }
       }
     },
     watch:{
@@ -73,6 +76,12 @@ export default {
       },
       $route(to){
         this.setSuperAndPath(to.query.url, to.hash)
+      },
+      storage(){
+        this.update()
+      },
+      group(){
+        this.update()
       }
     },
     computed:{
@@ -81,9 +90,13 @@ export default {
       //   set: function() {}
       // },
       url:{
-        get: function() { return this.$route.hash != undefined ? this.$route.query.url+this.$route.hash : this.$route.query.urll},
+        get: function() { return this.$route.hash != undefined ? this.$route.query.url+this.$route.hash : this.$route.query.url},
         set: function() {}
       },
+      path:{
+        get: function() { return this.storage+this.group.privacy+'/'},
+        set: function() {}
+      }
 
     }
 
