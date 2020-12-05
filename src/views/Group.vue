@@ -41,39 +41,47 @@
 
   <div class="row">
 
-  <b-card
-  img-src="https://picsum.photos/600/300/?image=25"
-  img-alt="Image"
-  img-top
-  tag="article"
-  class="m-2 col">
-  <b-card-title><a :href="url" target="_blank">{{name}}</a></b-card-title>
+    <b-card
+    img-src="https://picsum.photos/600/300/?image=25"
+    img-alt="Image"
+    img-top
+    tag="article"
+    class="m-2 col">
+    <b-card-title><a :href="url" target="_blank">{{name}}</a></b-card-title>
 
-  <b-button v-if="inbox != undefined" :to="'/inbox?url='+inbox" variant="outline-primary" size="sm">
-    <b-icon-mailbox></b-icon-mailbox> Inbox</b-button>
-    <b-button :href="'https://scenaristeur.github.io/spoggy-simple?source='+url" variant="outline-primary" target="_blank" size="sm">Graphe</b-button>
-    <b-button :to="'/profile?url='+maker" variant="outline-primary" size="sm">Admin</b-button>
+    <b-button v-if="inbox != undefined" :to="'/inbox?url='+inbox" variant="outline-primary" size="sm">
+      <b-icon-mailbox></b-icon-mailbox> Inbox</b-button>
+      <b-button :href="'https://scenaristeur.github.io/spoggy-simple?source='+url" variant="outline-primary" target="_blank" size="sm">Graphe</b-button>
+      <b-button :to="'/profile?url='+maker" variant="outline-primary" size="sm">Admin</b-button>
 
-    <b-card-header>
-      {{ purpose }}
-    </b-card-header>
-    <b-card-text>
-      <h5>Members</h5>
+      <b-card-header v-if="purpose != undefined && purpose.length > 0">
+        {{ purpose }}
+      </b-card-header>
+
+
+
       <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm" disabled >Inviter</b-button>
       <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm" disabled >Partager</b-button>
 
       <b-button @click="join_req" variant="outline-primary" size="sm">Rejoindre</b-button>
-      <br>
-      <ul>
-        <li v-for="m in members" :key="m">{{m}}</li>
-      </ul>
-    </b-card-text>
 
-  </b-card>
 
-  <Cockpit class="col-12 col-lg-9" :url="url"/>
+      <b-alert show class="mt-2">
+        <small>
+          <h6>Membres</h6>
+          <ul style="padding:0rem">
+            <li v-for="m in members" :key="m" >
+              <UserNameLite :webId="m" />
+            </li>
+          </ul>
+        </small>
+      </b-alert>
 
-</div>
+    </b-card>
+
+    <Cockpit class="col-12 col-lg-9" :url="url"/>
+
+  </div>
 </div>
 </template>
 
@@ -90,7 +98,8 @@ export default {
   name: 'Group',
   mixins: [GroupMixin, ProfileMixin],
   components: {
-    'Cockpit': () => import('@/components/gouvernance/Cockpit')
+    'Cockpit': () => import('@/components/gouvernance/Cockpit'),
+    'UserNameLite': () => import('@/components/basic/UserNameLite')
   },
   created(){
     if(this.$route.query.url != undefined){

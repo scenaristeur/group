@@ -1,7 +1,7 @@
 <template>
   <div class="container">
     <div v-if="webId != null">
-      <NavBar :folder="folder"/>
+      <!-- <NavBar :url="url" :folder="folder" /> -->
       <div class="row">
 
         <InboxMenu class="col-3 d-lg-block d-none" :folder="folder" />
@@ -26,9 +26,9 @@
               variant="light">
               <b-icon-arrow-left ></b-icon-arrow-left>
             </b-button>
-            <b-button>Edit</b-button>
+            <!-- <b-button>Edit</b-button>
             <b-button>Undo</b-button>
-            <b-button>Redo</b-button>
+            <b-button>Redo</b-button> -->
             <b-button v-if="mail.url != undefined" variant="danger" @click="action('delete')">
               <b-icon-trash ></b-icon-trash>
             </b-button>
@@ -175,7 +175,7 @@
 
 </b-modal>
 </div>
-  <div v-else>Please login with a Solid webId to create a group !</div>
+<div v-else>Please login with a Solid webId to create a group !</div>
 <!-- <hr><hr>
 {{ folder}}<br>
 {{ url}} -->
@@ -194,7 +194,7 @@ export default {
   name: 'Inbox',
   mixins: [InboxMixin, ConverterMixin],
   components: {
-    'NavBar': () => import('@/components/inbox/NavBar'),
+    // 'NavBar': () => import('@/components/inbox/NavBar'),
     'InboxMenu': () => import('@/components/inbox/InboxMenu')
   },
   async  created(){
@@ -267,15 +267,14 @@ export default {
       this.opened = true
       this.mail = await this.getMail(url)
       console.log("mail:",this.mail)
-
     }
   },
   watch:{
     url(){
-    console.log(this.url)
-    this.update()
-  }
-
+      this.opened = false
+      console.log(this.url)
+      this.update()
+    }
   },
   computed:{
     url:{

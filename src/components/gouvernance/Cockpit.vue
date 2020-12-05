@@ -1,8 +1,8 @@
 <template>
-  <div class="container fluid">
-    <b-tabs content-class="m-1 container fluid" fill>
-      <b-tab v-for="b in blocks" :key="b.name" class="container fluid">
-        <template #title :title="b.name">
+  <div >
+    <b-tabs>
+      <b-tab v-for="b in blocks" :key="b.name">
+        <template #title>
           <b-icon :icon="b.icon" v-if="b.icon != undefined" ></b-icon> <div v-else>{{b.name}}</div>
         </template>
         <!-- <div class="scroll container fluid"> -->

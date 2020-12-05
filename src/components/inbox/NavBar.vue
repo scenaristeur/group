@@ -6,7 +6,12 @@
       <b-button variant="warning" v-b-modal.modal-scrollable ><b-icon-vector-pen></b-icon-vector-pen></b-button>
     </b-button-group>
 
-      <b-navbar-brand href="#">GroupMail</b-navbar-brand>
+      <!-- <b-navbar-brand :to="'group?url='+url">
+        <b-button variant="dark"><b-icon-arrow-left></b-icon-arrow-left> GRoup</b-button>
+      </b-navbar-brand> -->
+      <b-navbar-brand >
+        GRoupMail
+      </b-navbar-brand>
 
       <b-navbar-toggle target="nav-collapse"></b-navbar-toggle>
 
@@ -46,31 +51,10 @@
 </template>
 
 <script>
-// import auth from 'solid-auth-client';
-// import FC from 'solid-file-client'
-// const fc   = new FC( auth )
 
 export default {
   name: 'NavBar',
-  props: ['folder'],
-  components: {
-    'SideBar': () => import('@/components/inbox/SideBar'),
-
-  },
-  created(){
-    this.update()
-  },
-  data: function () {
-    return {
-
-    }
-  },
-  methods: {
-    async update() {
-      // this.url = this.$route.query.url
-      // console.log(this.url)
-      // this.folder = await fc.readFolder()
-    }
-  }
+  props: ['url', 'folder'],
+  components: {'SideBar': () => import('@/components/inbox/SideBar')}
 }
 </script>

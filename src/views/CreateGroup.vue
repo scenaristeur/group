@@ -1,20 +1,21 @@
 <template>
-  <div class="home">
+  <div class="container fluid">
+    <h3>Nouveau GRoup</h3>
     <div v-if="webId != null">
-      <b-form-group>
-        <b-form-input  ref="name" size="lg" class="m-3" v-model="group.name" placeholder="Nom du groupe"></b-form-input>
-        <b-form-textarea size="lg" class="m-3" v-model="group.purpose" placeholder="Raison d'être"></b-form-textarea>
-        <b-form-input  size="lg" class="m-3" v-model="group.super" placeholder="Super groupe"></b-form-input>
-        <b-form-select v-model="group.privacy" :options="privacy_options"  size="lg" class="m-3"></b-form-select>
-        <b-form-input size="lg" class="m-3" v-model="path" placeholder="Chemin"></b-form-input>
-      </b-form-group>
-      <b-button @click="create" variant="primary">Créer</b-button>
-      <p>
+
+        <b-form-input  ref="name"  class="m-3" v-model="group.name" placeholder="Nom du groupe"></b-form-input>
+        <b-form-textarea  class="m-3" v-model="group.purpose" placeholder="Raison d'être"></b-form-textarea>
+        <b-form-input   class="m-3" v-model="group.super" placeholder="Super groupe"></b-form-input>
+        <b-form-select v-model="group.privacy" :options="privacy_options"   class="m-3"></b-form-select>
+        <b-form-input  class="m-3" v-model="path" placeholder="Chemin"></b-form-input>
+
+      <b-button @click="create" variant="primary">Créer</b-button><br>
+      <small>
         {{ group}}
         {{ group_url}}
-      </p>
+      </small>
     </div>
-    <div v-else>Please login with a Solid webId to create a group !</div>
+    <b-alert variant="info" show  v-else>Please login with a Solid webId to create a group !</b-alert>
   </div>
 </template>
 
@@ -26,11 +27,11 @@ export default {
   name: 'CreateGroup',
   mixins: [GroupMixin, ProfileMixin],
   mounted(){
-    //this.$refs.name.focus()
+    if (this.$refs.name != undefined)
+    this.$refs.name.focus()
   },
   data: function () {
     return {
-    //  path: "",
       group:{privacy:"public"},
       privacy_options: [
         { value: 'public', text: 'Public. Tout le monde peut voir qui est dans le groupe et ce qui est publié' },
@@ -39,16 +40,16 @@ export default {
       }
     },
     async created(){
-    this.update()
+      this.update()
     },
     methods: {
       async setSuperAndPath(url, hash){
         if(url != undefined){
           this.group.super = hash != undefined ? url+hash : url
-          console.log(this.group.super)
+        //  console.log(this.group.super)
           let folder = await this.getGroupStorage(this.group.super)
           this.path = `${folder.url}`
-          console.log(this.path)
+        //  console.log(this.path)
         }else{
           this.path = this.$store.state.storage+this.group.privacy+'/'
         }
@@ -56,7 +57,7 @@ export default {
       async create() {
         this.group.path = this.path
         let group_result  = await this.createGroup(this.group)
-        console.log("group result",group_result)
+      //  console.log("group result",group_result)
         this.group_url = group_result.url
         if(group_result.creation.status== "ok"){
           this.$router.push('group?url='+group_result.url+"#"+group_result.identifier)
@@ -68,27 +69,17 @@ export default {
         }else{
           this.path = this.storage+this.group.privacy+'/'
         }
+        if (this.$refs.name != undefined)
+        this.$refs.name.focus()
       }
     },
     watch:{
-      url(){
-        this.group.super = this.url
-      },
-      $route(to){
-        this.setSuperAndPath(to.query.url, to.hash)
-      },
-      storage(){
-        this.update()
-      },
-      group(){
-        this.update()
-      }
+      url(){ this.group.super = this.url },
+      $route(to){ this.setSuperAndPath(to.query.url, to.hash) },
+      storage(){ this.update() },
+      group(){ this.update() }
     },
     computed:{
-      // path:{
-      //   get: function() { return this.$store.state.storage+this.group.privacy+'/'},
-      //   set: function() {}
-      // },
       url:{
         get: function() { return this.$route.hash != undefined ? this.$route.query.url+this.$route.hash : this.$route.query.url},
         set: function() {}
@@ -97,8 +88,6 @@ export default {
         get: function() { return this.storage+this.group.privacy+'/'},
         set: function() {}
       }
-
     }
-
   }
   </script>

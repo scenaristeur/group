@@ -4,7 +4,10 @@
     <b-card no-body>
       <b-tabs card>
         <!-- Render Tabs, supply a unique `key` to each tab -->
-        <b-tab v-for="(fi,i) in folder.files" :key="'dyn-tab-' + i" :title="fi.name">
+        <b-tab v-for="(fi,i) in folder.files" :key="'dyn-tab-' + i">
+          <template #title>
+            <small>{{decodeURI(fi.name)}}</small>
+          </template>
           <Item :item="fi" :block="block" />
           <b-button size="sm" variant="danger" class="float-right" @click="closeItem(fi)">
             Close {{ block.type }}
@@ -83,7 +86,6 @@ export default {
     async update(){
       this.block.url = this.url
       this.block.storage = await this.getStorage(this.url)
-      console.log("apres")
       this.block.path = this.block.storage+this.block.type+"/"
       !await fc.itemExists(this.block.path) ? fc.createFolder(this.block.path) : ""
       this.folder = await fc.readFolder(this.block.path)

@@ -2,7 +2,7 @@
   <div class="scroll">
 
     <b-list-group v-if="resource.things != undefined">
-      <b-list-group-item  v-for="thing in resource.things" :key="thing.internal_url">
+      <b-list-group-item style="padding:0rem 0rem;margin:0rem" v-for="thing in resource.things" :key="thing.internal_url">
         <div>
           {{ thing.internal_url}}
 

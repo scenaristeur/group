@@ -97,7 +97,7 @@ methods: {
       let messUri = this.fileUrl+"#"+messageId
       console.log(messUri)
 
-
+console.log("index", index)
       await ldflex.data.from(this.fileUrl)[index]['http://www.w3.org/2005/01/wf/flow#message'].add(namedNode(messUri))
 
       const chatDoc = await fetchDocument(this.fileUrl);
@@ -109,6 +109,7 @@ methods: {
       /*  let indexSubj = chatDoc.addSubject({identifier: index, identifierPrefix: ind_prefix})
       indexSubj.addNodeRef('http://www.w3.org/2005/01/wf/flow#message',subj.asNodeRef())*/
 
+      console.log("AFTER")
       await chatDoc.save();
 
 

@@ -4,22 +4,23 @@
 
     <div id="nav">
 
-      <router-link to="/">Accueil</router-link> |
+      <router-link to="/">GRoups</router-link> |
       <router-link v-if="url == 'undefined'" to="/createGroup">Nouveau GRoup</router-link>
       <router-link v-else :to="'/createGroup?url='+url">Nouveau Sous-GRoup</router-link> |
       <router-link to="/about">A Propos</router-link>
       <SolidLoginButton />
+
     </div>
-    <a href="https://www.patreon.com/smag0" target="_blank">
-      <img src="./assets/patreon.png" width="100px"/><br>
-      Soutenir GRoup
-    </a>
+
     <router-view class="container"/>
 
+    <b-button variant="outline-dark" size="sm" href="https://www.patreon.com/smag0" target="_blank">
+      Soutenir GRoup sur <img src="./assets/patreon.png" width="100px"/>
+    </b-button>
     <SolidTrackSession />
 
     <hr>
-    0.0.19 - fix path of createGroup
+    0.0.20 - membres
   </div>
 </template>
 <script>

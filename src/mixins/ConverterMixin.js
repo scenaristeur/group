@@ -3,7 +3,7 @@ export default {
     localname(uri){
       var ln = uri;
       if (uri.split('#')[1] == 'this'){
-        ln = ln.split("/").pop()
+        ln = decodeURI(ln.split("/").pop())
         return ln
       }else if(uri.split('#')[1] == "me" || uri.split('#')[1] == "we" ){
         return ln
