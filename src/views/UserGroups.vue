@@ -1,7 +1,7 @@
 <template>
   <div>
     <div v-if="webId != null">
-
+      MES GROUPES
       <div v-if="groups.length > 0">{{ groups.length }} GRoups.</div>
 
       <b-list-group>

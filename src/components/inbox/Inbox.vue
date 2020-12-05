@@ -260,7 +260,12 @@ export default {
     },
     async update() {
       console.log(this.url)
-      this.folder = await fc.readFolder(this.url)
+      try{
+          this.folder = await fc.readFolder(this.url)
+      }catch(e){
+        console.log(e)
+      }
+
     },
     async open(url){
       console.log(url)

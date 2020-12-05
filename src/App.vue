@@ -20,7 +20,7 @@
     <SolidTrackSession />
 
     <hr>
-    0.0.20 - membres
+    0.0.21 - membres & bug mobile
   </div>
 </template>
 <script>
