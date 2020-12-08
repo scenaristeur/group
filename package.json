@@ -1,6 +1,6 @@
 {
-  "name": "Group",
-  "version": "0.0.21",
+  "name": "GRoup",
+  "version": "0.0.22",
   "private": true,
   "scripts": {
     "serve": "vue-cli-service serve",
@@ -16,6 +16,8 @@
     "bootstrap": "^4.5.3",
     "bootstrap-vue": "^2.20.1",
     "core-js": "^3.6.5",
+    "dayspan-vuetify": "^0.4.0",
+    "moment": "^2.29.1",
     "rdf-namespaces": "^1.9.2",
     "register-service-worker": "^1.7.1",
     "solid-auth-cli": "^1.0.15",

@@ -19,6 +19,14 @@ const routes = [
     component: () => import(/* webpackChunkName: "about" */ '../views/About.vue')
   },
   {
+    path: '/Browser',
+    name: 'Browser',
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "browser" */ '../views/Browser.vue')
+  },
+  {
     path: '/createGroup',
     name: 'createGroup',
     // route level code-splitting
@@ -34,6 +42,15 @@ const routes = [
     // this generates a separate chunk (about.[hash].js) for this route
     // which is lazy-loaded when the route is visited.
     component: () => import(/* webpackChunkName: "group" */ '@/views/Group.vue')
+  },
+  {
+    path: '/calendrier',
+    name: 'calendrier',
+    props: route => ({ query: route.query.url }),
+    // route level code-splitting
+    // this generates a separate chunk (about.[hash].js) for this route
+    // which is lazy-loaded when the route is visited.
+    component: () => import(/* webpackChunkName: "calendrier" */ '@/views/Calendrier.vue')
   },
   {
     path: '/inbox',

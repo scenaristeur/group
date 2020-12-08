@@ -7,10 +7,12 @@
         </template>
         <!-- <div class="scroll container fluid"> -->
           <div v-if="b.type=='Wiki'">
-            <Wiki :url="url"/>
+            wikilist todo
+            <!-- <Wiki :url="url"/> -->
           </div>
           <div v-if="b.type=='Chat'">
-            <ChatList :url="url"/>
+            chatlist todo
+            <!-- <ChatList :url="url"/> -->
           </div>
           <div v-if="b.type=='Projet'">
             <Projets :url="url"/>
@@ -35,8 +37,8 @@ export default {
   components:{
     //  'Generique': () => import('@/components/gouvernance/Generique.vue'),
     'Projets': () => import('@/components/gouvernance/Projets.vue'),
-    'Wiki': () => import('@/components/gouvernance/Wiki.vue'),
-    'ChatList': () => import('@/components/chat/ChatList.vue'),
+    //'Wiki': () => import('@/components/gouvernance/Wiki.vue'),
+    //'ChatList': () => import('@/components/chat/ChatList.vue'),
     'List': () => import('@/components/basic/List.vue'),
 
   },

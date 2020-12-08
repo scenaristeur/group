@@ -31,7 +31,7 @@ export default {
     async update() {
       this.url = this.$route.query.url
       console.log(this.url)
-      this.folder = await fc.readFolder()
+      this.url != undefined ? this.folder = await fc.readFolder(this.url) : ""
     }
   },
   watch: {

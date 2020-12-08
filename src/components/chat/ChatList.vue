@@ -93,6 +93,7 @@ export default {
     }
   },
   created() {
+    console.log("URL for chat", this.url)
     this.update()
     // this.channel = this.$store.state.chat.channel
     // console.log("###############INSTANCE",this.channel)  //  this.webId = this.$store.state.solid.webId
@@ -101,7 +102,7 @@ export default {
   },
   methods:{
     async update(){
-    //  console.log(this.url)
+     console.log(this.url)
       let storage = await this.getStorage(this.url)
       this.storage = `${storage}`+'chat/'
       let index = this.storage+'index.ttl'
