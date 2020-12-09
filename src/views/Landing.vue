@@ -8,7 +8,7 @@
 
     <div>
       <b-card-group columns>
-        <b-card title="Question n° 1:" img-src="https://picsum.photos/300/200/?image=41" img-alt="Image" img-top>
+        <b-card title="Question n° 1:" :img-src="'https://picsum.photos/300/200/?image='+Math.floor(Math.random()*1000)" img-alt="Image" img-top>
           <b-card-text>
             <b-form-group label="Que ferais-tu si tu avais">
               <b-form-radio-group id="radio-group-2" v-model="selected" name="radio-sub-component">
@@ -30,14 +30,15 @@
           </template>
         </b-card>
 
-        <b-card title="Question n° 2:" img-src="https://picsum.photos/300/300/?image=4" img-alt="Image" img-top>
+        <b-card title="Question n° 2:" :img-src="'https://picsum.photos/300/300/?image='+Math.floor(Math.random()*1000)" img-alt="Image" img-top>
           <b-card-text>
-            Quel super-pouvoir souhaiterais-tu avoir l'utiliserais-tu ?
+            Quel super-pouvoir souhaiterais-tu avoir et comment l'utiliserais-tu ?
           </b-card-text>
+          <b-form-input v-model="text2" placeholder="Mon super pouvoir..."></b-form-input>
           <b-form-textarea
-          id="textarea2"
-          v-model="text2"
-          placeholder="..."
+          id="textarea3"
+          v-model="text3"
+          placeholder="Comment je l'utiliserais..."
           rows="3"
           max-rows="6"
           ></b-form-textarea>
@@ -45,15 +46,15 @@
             <b-button href="#" variant="primary">Répondre</b-button>          </template>
           </b-card>
 
-          <b-card title="Question n°3:" img-src="https://picsum.photos/300/400/?image=42" img-alt="Image" img-top>
+          <b-card title="Question n°3:" :img-src="'https://picsum.photos/300/400/?image='+Math.floor(Math.random()*1000)" img-alt="Image" img-top>
             <b-card-text>
               Non, plus sérieusement, j'ai besoin de
-              <b-form-input v-model="text3" placeholder="La chose dont j'ai besoin"></b-form-input>
+              <b-form-input v-model="text4" placeholder="La chose dont j'ai besoin"></b-form-input>
               pour
               <!-- <b-form-input v-model="text4" placeholder="Ce que je ferais avec"></b-form-input> -->
               <b-form-textarea
-              id="textarea4"
-              v-model="text4"
+              id="textarea5"
+              v-model="text5"
               placeholder="Ce que je ferais avec..."
               rows="3"
               max-rows="6"
@@ -93,9 +94,11 @@
         folder:{},
         url: "",
         text1: "",
+        selected: 100,
         text2: "",
         text3: "",
         text4: "",
+        text5: "",
         score: ""
       }
     },

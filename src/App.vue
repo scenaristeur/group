@@ -22,7 +22,7 @@
     <SolidTrackSession />
 
     <hr>
-    0.0.27 - landing
+    0.0.27b - landing random
   </div>
 </template>
 <script>
