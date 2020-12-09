@@ -70,7 +70,7 @@ export default {
     this.storage = this.$store.state.storage
 
     this.url = this.$route.query.url
-  if (this.url != undefined && this.url != 'undefined'){
+    if (this.url != undefined && this.url != 'undefined'){
       console.log("1",this.url)
       this.folder = await fc.readFolder(this.url)
       this.parent = this.folder.parent
@@ -81,7 +81,11 @@ export default {
   methods: {
     async update() {
 
-       if(this.storage != undefined){
+      if(this.current != undefined && this.current.length > 0){
+        console.log(this.current)
+        this.folder = await fc.readFolder( this.current )
+        this.parent = this.folder.parent
+      }else if(this.storage != undefined){
         this.current = this.storage
         console.log("STORAGE",this.storage)
         console.log("2",this.current)

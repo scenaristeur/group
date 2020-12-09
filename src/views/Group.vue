@@ -8,6 +8,7 @@
       size="sm">Super GRoup</b-button>
       <div class="m-2" v-if="st.files != undefined && st.files.length > 0">
 
+        <!-- ne devrait pas afficher calendrier.json -->
         <b-dropdown id="dropdown-sg" text="Sous-GRoups" class="m-md-2" size="sm">
           <b-dropdown-item
           v-for="subgroup in st.files"
@@ -49,40 +50,43 @@
     class="m-2 col">
     <b-card-title><a :href="url" target="_blank">{{name}}</a></b-card-title>
 
-    <b-button v-if="inbox != undefined" :to="'/inbox?url='+inbox" variant="outline-primary" size="sm">
-      <b-icon-mailbox></b-icon-mailbox> Inbox</b-button>
-      <b-button :href="'https://scenaristeur.github.io/spoggy-simple?source='+url" variant="outline-primary" target="_blank" size="sm">Graphe</b-button>
-      <b-button :to="'/profile?url='+maker" variant="outline-primary" size="sm">Admin</b-button>
+    <b-button :to="'/calendrier?url='+url" variant="outline-primary" size="sm">
+      <b-icon-calendar3></b-icon-calendar3> Calendrier</b-button>
 
-      <b-card-header v-if="purpose != undefined && purpose.length > 0">
-        {{ purpose }}
-      </b-card-header>
+      <b-button v-if="inbox != undefined" :to="'/inbox?url='+inbox" variant="outline-primary" size="sm">
+        <b-icon-mailbox></b-icon-mailbox> Inbox</b-button>
+        <b-button :href="'https://scenaristeur.github.io/spoggy-simple?source='+url" variant="outline-primary" target="_blank" size="sm">Graphe</b-button>
+        <b-button :to="'/profile?url='+maker" variant="outline-primary" size="sm">Admin</b-button>
 
-
-
-      <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm" disabled >Inviter</b-button>
-      <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm" disabled >Partager</b-button>
-
-      <b-button @click="join_req" variant="outline-primary" size="sm">Rejoindre</b-button>
+        <b-card-header v-if="purpose != undefined && purpose.length > 0">
+          {{ purpose }}
+        </b-card-header>
 
 
-      <b-alert show class="mt-2">
-        <small>
-          <h6>Membres</h6>
-          <ul style="padding:0rem">
-            <li v-for="m in members" :key="m" >
-              <UserNameLite :webId="m" />
-            </li>
-          </ul>
-        </small>
-      </b-alert>
 
-    </b-card>
+        <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm" disabled >Inviter</b-button>
+        <b-button :to="'/invite?url='+url" variant="outline-primary" size="sm" disabled >Partager</b-button>
 
-    <Cockpit class="col-12 col-lg-9" :url="url"/>
+        <b-button @click="join_req" variant="outline-primary" size="sm">Rejoindre</b-button>
 
+
+        <b-alert show class="mt-2">
+          <small>
+            <h6>Membres</h6>
+            <ul style="padding:0rem">
+              <li v-for="m in members" :key="m" >
+                <UserNameLite :webId="m" />
+              </li>
+            </ul>
+          </small>
+        </b-alert>
+
+      </b-card>
+
+      <Cockpit class="col-12 col-lg-9" :url="url"/>
+
+    </div>
   </div>
-</div>
 </template>
 
 <script>

@@ -9,7 +9,7 @@
       <router-link v-else :to="'/createGroup?url='+url">Nouveau Sous-GRoup</router-link> |
       <router-link :to="'/browser?url='+url">Browser</router-link> |
       <router-link to="/about">A Propos</router-link> |
-      <router-link to="/calendrier">Calendrier</router-link>
+      <!-- <router-link to="/calendrier">Calendrier</router-link> -->
       <SolidLoginButton />
 
     </div>
@@ -22,7 +22,7 @@
     <SolidTrackSession />
 
     <hr>
-    0.0.23b - integration calendrier + publicpath
+    0.0.24 - calendrier
   </div>
 </template>
 <script>
