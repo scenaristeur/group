@@ -8,7 +8,8 @@
       <router-link v-if="url == 'undefined'" to="/createGroup">Nouveau GRoup</router-link>
       <router-link v-else :to="'/createGroup?url='+url">Nouveau Sous-GRoup</router-link> |
       <router-link :to="'/browser?url='+url">Browser</router-link> |
-      <router-link to="/about">A Propos</router-link>
+      <router-link to="/about">A Propos</router-link> |
+      <router-link to="/calendrier">Calendrier</router-link>
       <SolidLoginButton />
 
     </div>
@@ -21,7 +22,7 @@
     <SolidTrackSession />
 
     <hr>
-    0.0.22 - integration browser
+    0.0.23 - integration calendrier
   </div>
 </template>
 <script>
@@ -41,7 +42,7 @@ export default {
   },
   data: function () {
     return {
-  }
+    }
   },
   async   created(){
 
