@@ -22,7 +22,7 @@
     <SolidTrackSession />
 
     <hr>
-    0.0.23 - integration calendrier
+    0.0.23b - integration calendrier + publicpath
   </div>
 </template>
 <script>
