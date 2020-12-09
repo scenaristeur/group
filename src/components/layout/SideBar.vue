@@ -114,6 +114,7 @@ export default {
       if (selected.type == 'folder'){
         this.update()
       }else{
+          this.update()
         //  console.log(selected)
 
         //  console.log(this.selected)

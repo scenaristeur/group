@@ -90,8 +90,8 @@ export default {
       this.block.path = this.block.storage+this.block.type+"/"
       console.log(fc)
       console.log(this.block)
-      // !await fc.itemExists(this.block.path) ? fc.createFolder(this.block.path) : ""
-      // this.folder = await fc.readFolder(this.block.path)
+       !await fc.itemExists(this.block.path) ? fc.createFolder(this.block.path) : ""
+       this.folder = await fc.readFolder(this.block.path)
     },
   },
   watch:{

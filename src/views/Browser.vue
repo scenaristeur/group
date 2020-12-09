@@ -3,12 +3,14 @@
     Browser<hr>
     <!-- {{ folder}}<hr> -->
     {{ url}}
-
+    <br>
+    FOLDER URL : {{ folder.url}}
+    <hr>
     <!-- <div  v-if="first == true" > -->
-    <SolidEditor :file="selected" />
+    <SolidEditor />
     <!-- </div>
     <div v-else> -->
-    <EditorJs :file="selected" />
+    <EditorJs  />
     <!-- </div> -->
 
 
@@ -36,19 +38,22 @@ export default {
   data: function () {
     return {
       folder:{},
-      selected: {}
+      file: {}
     }
   },
   methods: {
     async update() {
       this.url = this.$route.query.url
-      console.log('Browser',this.url)
-      this.folder = await fc.readFolder(this.url)
+      console.log('Browser',this.url+ this.$route.hash)
+      this.url.endsWith('/') ? this.folder = await fc.readFolder(this.url) : this.file = await fc.readFile(this.url)
+      console.log(this.folder)
+      console.log(this.file)
     }
   },
   watch: {
     url(){
       console.log(this.url)
+
     },
     $route(to){
       console.log( to.hash, to.query.url)

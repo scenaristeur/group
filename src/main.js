@@ -44,6 +44,11 @@ Vue.$dayspan.addLocales(['fr', 'fr-CA', 'fr-BE', 'fr-CH', 'fr-FR', 'fr-LU', 'fr-
 
 Vue.config.productionTip = false
 
+
+import Editor from 'vue-editor-js'
+
+Vue.use(Editor)
+
 new Vue({
   router,
   store,

@@ -22,7 +22,7 @@
     <SolidTrackSession />
 
     <hr>
-    0.0.24 - calendrier
+    0.0.26 - solideditor  & editorjs
   </div>
 </template>
 <script>

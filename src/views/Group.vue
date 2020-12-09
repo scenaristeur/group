@@ -9,7 +9,7 @@
       <div class="m-2" v-if="st.files != undefined && st.files.length > 0">
 
         <!-- ne devrait pas afficher calendrier.json -->
-        <b-dropdown id="dropdown-sg" text="Sous-GRoups" class="m-md-2" size="sm">
+        <b-dropdown id="dropdown-sg" text="Sous-GRoups et docs" class="m-md-2" size="sm">
           <b-dropdown-item
           v-for="subgroup in st.files"
           :key="subgroup.url"
