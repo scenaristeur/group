@@ -142,6 +142,7 @@ export default {
         },
         onChange: (args) => {
           console.log('Now I know that Editor\'s content changed!', args)
+          console.log(this.data)
         },
         data: {
           "time": 1591362820044,

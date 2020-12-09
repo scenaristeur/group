@@ -11,52 +11,53 @@
     </template>
 
     <template slot="menuRight">
-      <v-btn icon large href="https://github.com/ahmadissa/dayspan-vuetify-2" target="_blank">
-        <v-avatar size="32px" tile>
-          <img src="https://simpleicons.org/icons/github.svg" alt="Github">
-        </v-avatar>
-      </v-btn>
-    </template>
-
-    <template slot="eventPopover" slot-scope="slotData">
-      <ds-calendar-event-popover
-      v-bind="slotData"
-      :read-only="readOnly"
-      @finish="saveState"
-      ></ds-calendar-event-popover>
-    </template>
-
-    <template slot="eventCreatePopover" slot-scope="{placeholder, calendar}">
-      <ds-calendar-event-create-popover
-      :calendar-event="placeholder"
-      :calendar="calendar"
-      :close="$refs.app.$refs.calendar.clearPlaceholder"
-      @create-edit="$refs.app.editPlaceholder"
-      @create-popover-closed="saveState"
-      ></ds-calendar-event-create-popover>
-    </template>
-
-    <template slot="eventTimeTitle" slot-scope="{calendarEvent, details}">
-      <div>
-        <v-icon class="ds-ev-icon"
-        v-if="details.icon"
-        size="14"
-        :style="{color: details.forecolor}">
-        {{ details.icon }}
-      </v-icon>
-      <strong class="ds-ev-title">{{ details.title }}</strong>
-    </div>
-    <div class="ds-ev-description">{{ getCalendarTime( calendarEvent ) }}</div>
+      <v-btn icon large >
+        <!-- href="https://github.com/ahmadissa/dayspan-vuetify-2" target="_blank"-->
+        <!-- <v-avatar size="32px" tile>
+        <img src="https://simpleicons.org/icons/github.svg" alt="Github">
+      </v-avatar> --> .
+    </v-btn>
   </template>
 
-  <template slot="drawerBottom">
-    <div class="pa-3">
-      <v-checkbox
-      label="Read Only?"
-      v-model="readOnly"
-      ></v-checkbox>
-    </div>
+  <template slot="eventPopover" slot-scope="slotData">
+    <ds-calendar-event-popover
+    v-bind="slotData"
+    :read-only="readOnly"
+    @finish="saveState"
+    ></ds-calendar-event-popover>
   </template>
+
+  <template slot="eventCreatePopover" slot-scope="{placeholder, calendar}">
+    <ds-calendar-event-create-popover
+    :calendar-event="placeholder"
+    :calendar="calendar"
+    :close="$refs.app.$refs.calendar.clearPlaceholder"
+    @create-edit="$refs.app.editPlaceholder"
+    @create-popover-closed="saveState"
+    ></ds-calendar-event-create-popover>
+  </template>
+
+  <template slot="eventTimeTitle" slot-scope="{calendarEvent, details}">
+    <div>
+      <v-icon class="ds-ev-icon"
+      v-if="details.icon"
+      size="14"
+      :style="{color: details.forecolor}">
+      {{ details.icon }}
+    </v-icon>
+    <strong class="ds-ev-title">{{ details.title }}</strong>
+  </div>
+  <div class="ds-ev-description">{{ getCalendarTime( calendarEvent ) }}</div>
+</template>
+
+<template slot="drawerBottom">
+  <div class="pa-3">
+    <v-checkbox
+    label="Read Only?"
+    v-model="readOnly"
+    ></v-checkbox>
+  </div>
+</template>
 
 </ds-calendar-app>
 
@@ -297,7 +298,7 @@ export default {
       let state = this.calendar.toInput(true);
       let json = JSON.stringify(state);
       //console.log('calendar',json)
-    //  localStorage.setItem(this.storeKey, json);
+      //  localStorage.setItem(this.storeKey, json);
       if (this.st != undefined){
         try{
           //  createFile( fileURL, content, contentType, options )
@@ -313,44 +314,44 @@ export default {
       try
       {
         //console.log("READ",this.st.url)
-      let json = await fc.readFile(this.st.url+'calendrier.json')
-      let savedState = JSON.parse(json)
-      //let savedState = JSON.parse(localStorage.getItem(this.storeKey));
-      if (savedState)
+        let json = await fc.readFile(this.st.url+'calendrier.json')
+        let savedState = JSON.parse(json)
+        //let savedState = JSON.parse(localStorage.getItem(this.storeKey));
+        if (savedState)
+        {
+          state = savedState;
+          state.preferToday = false;
+        }
+      }
+      catch (e)
       {
-        state = savedState;
-        state.preferToday = false;
+        // eslint-disable-next-line
+        console.log( e );
+      }
+      // if (!state.events || !state.events.length)
+      // {
+      //   state.events = this.defaultEvents;
+      // }
+      state.events.forEach(ev =>
+        {
+          let defaults = this.$dayspan.getDefaultEventDetails();
+          ev.data = Vue.util.extend( defaults, ev.data );
+        });
+        this.$refs.app.setState( state );
       }
     }
-    catch (e)
-    {
-      // eslint-disable-next-line
-      console.log( e );
-    }
-    // if (!state.events || !state.events.length)
-    // {
-    //   state.events = this.defaultEvents;
-    // }
-    state.events.forEach(ev =>
-      {
-        let defaults = this.$dayspan.getDefaultEventDetails();
-        ev.data = Vue.util.extend( defaults, ev.data );
-      });
-      this.$refs.app.setState( state );
-    }
   }
-}
-</script>
+  </script>
 
-<style>
-body, html, #app, #dayspan {
-  font-family: Roboto, sans-serif !important;
-  width: 100%;
-  height: 100%;
-}
-.v-btn--flat,
-.v-text-field--solo .v-input__slot {
-  background-color: #f5f5f5 !important;
-  margin-bottom: 8px !important;
-}
-</style>
+  <style>
+  body, html, #app, #dayspan {
+    font-family: Roboto, sans-serif !important;
+    width: 100%;
+    height: 100%;
+  }
+  .v-btn--flat,
+  .v-text-field--solo .v-input__slot {
+    background-color: #f5f5f5 !important;
+    margin-bottom: 8px !important;
+  }
+  </style>

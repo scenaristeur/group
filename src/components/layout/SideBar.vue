@@ -1,6 +1,8 @@
 <template>
   <div class="sidebar">
-    <span style="font-size:30px;cursor:pointer" @click="openNav"><i class="fa fa-folder"></i> &#9776; TSB - Tiny Solid Browser</span>
+    <span style="font-size:20px;cursor:pointer" @click="openNav"><i class="fa fa-folder ml-2 mt-2 "></i>
+      &#9776; TSB - Tiny Solid Browser
+    </span>
 
     <div id="mySidenav" ref="mySidenav" class="sidenav">
       <a href="javascript:void(0)" class="closebtn" @click="closeNav">&times;</a>
@@ -114,7 +116,7 @@ export default {
       if (selected.type == 'folder'){
         this.update()
       }else{
-          this.update()
+        this.update()
         //  console.log(selected)
 
         //  console.log(this.selected)

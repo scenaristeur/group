@@ -22,7 +22,7 @@
     <SolidTrackSession />
 
     <hr>
-    0.0.26 - solideditor  & editorjs
+    0.0.27 - landing
   </div>
 </template>
 <script>
@@ -128,10 +128,10 @@ export default {
 
   a {
     font-weight: bold;
-    color: #2c3e50;
+  /*  color: #2c3e50;*/
 
     &.router-link-exact-active {
-      color: #42b983;
+    /*  color: #42b983;*/
     }
   }
 }
