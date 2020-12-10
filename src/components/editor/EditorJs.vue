@@ -3,6 +3,7 @@
     EditorJs : {{ url}}
     <div class="container">
       JS EDITOR
+      <b-button @click='save'>Enregistrer</b-button> (autosave Switch pour collaboration)
       <editor ref="editor" header list code checklist  :config="config" :initialized="onInitialized" />
       <!-- <button id='save-button' style="font-size: 2rem;" @click="save">Save</button>
       <editor
@@ -79,6 +80,7 @@ export default {
           },
           paragraph: {
             class: Paragraph,
+            placeholder: "Tape ton texte ici..."
           },
           embed: {
             class: Embed,
@@ -142,7 +144,10 @@ export default {
         },
         onChange: (args) => {
           console.log('Now I know that Editor\'s content changed!', args)
-          console.log(this.data)
+          //  this.save()
+        },
+        dataEmpty:{
+
         },
         data: {
           "time": 1591362820044,
@@ -271,20 +276,39 @@ export default {
     onInitialized(ed){
       console.log(ed)
     },
-    save() {
-      console.log(this.$refs.editor);
-      this.$refs.editor.save();
-      console.log("data", this.data)
-    },
-    onSave(response) {
-      console.log(JSON.stringify(response));
-    },
-    onReady() {
-      console.log("ready");
-    },
-    onChange() {
-      console.log("changed");
+    async save(){
+      try{
+        const response = await this.$refs.editor.state.editor.save().then((res)=>res);
+
+        let path = this.url.substring(0, this.url.lastIndexOf('/')+1)+'doc_blocks.json';
+        console.log(path)
+        try{
+          await fc.createFile( path, JSON.stringify(response), 'text/x-json' )
+          alert(path+" sauvegardé")
+        }
+        catch(e){
+          alert(e)
+        }
+      }
+
+      catch(e){
+        console.log("-")
+      }
+
     }
+    // async  save() {
+    //   console.log(this.$refs.editor);
+    //   const response = await this.$refs.editor.state.editor.save().then((res)=>res);
+    //   console.log( JSON.stringify(response) )
+    //   // this.$refs.editor.save();
+    //   // console.log("data", this.data)
+    // },
+    // onReady: () => {
+    //         console.log('on ready')
+    //       },
+    //       onChange: (args) => {
+    //         console.log('Now I know that Editor\'s content changed!')
+    //       },
   },
   watch: {
     url(){
