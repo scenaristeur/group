@@ -22,7 +22,7 @@
     <SolidTrackSession />
 
     <hr>
-    0.0.28 - save editor-js
+    0.0.29 - save editor-js with filename
   </div>
 </template>
 <script>

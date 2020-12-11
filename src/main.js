@@ -6,6 +6,10 @@ import store from './store'
 import vuetify from './plugins/vuetify'
 import DaySpan from 'dayspan-vuetify-2'
 import fr from 'dayspan-vuetify-2/src/locales/fr';
+// import VueIpfs from './plugins/vue-ipfs';
+//
+// // Load our IPFS plugin.
+// Vue.use(VueIpfs);
 
 Vue.config.productionTip = false
 

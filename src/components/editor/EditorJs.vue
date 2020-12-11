@@ -3,8 +3,13 @@
     EditorJs : {{ url}}
     <div class="container">
       JS EDITOR
-      <b-button @click='save'>Enregistrer</b-button> (autosave Switch pour collaboration)
-      <editor ref="editor" header list code checklist  :config="config" :initialized="onInitialized" />
+      <b-button-group>
+        <b-button @click='nouveau' >Nouveau</b-button>
+        <b-button @click='saveFile'>Enregistrer</b-button>
+      </b-button-group>
+      <!-- (autosave Switch pour collaboration) -->
+      <editor ref="editor" header list code checklist  :config="config" />
+      <!-- :initialized="onInitialized" -->
       <!-- <button id='save-button' style="font-size: 2rem;" @click="save">Save</button>
       <editor
       autofocus
@@ -16,6 +21,21 @@
       @ready="onReady"
       @change="onChange"
       /> -->
+    </div>
+
+    <div>
+
+
+      <b-modal id="modal-filename" title="Nouveau fichier">
+        <div>
+          <b-form-input v-model="filename" placeholder="Nom du fichier (.json)"></b-form-input>
+          <div class="mt-2">Value: {{ filename }}</div>
+        </div>
+        <div>
+          <b-form-input v-model="path" placeholder="chemin"></b-form-input>
+          <div class="mt-2">Value: {{ path }}</div>
+        </div>
+      </b-modal>
     </div>
   </div>
 </template>
@@ -49,12 +69,14 @@ export default {
   components: {
     //  'GroupTabs': () => import('@/components/group/GroupTabs')
   },
-  created(){
+  mounted(){
     this.update()
   },
   data: function () {
     return {
-
+      path:"",
+      //t: [], //pour eviter les erreurs editor-js ?
+      filename:"",
       url: {},
       folder: {folders:[], files: [], url:""},
       current: "",
@@ -142,12 +164,22 @@ export default {
         onReady: () => {
           console.log('on ready')
         },
-        onChange: (args) => {
-          console.log('Now I know that Editor\'s content changed!', args)
-          //  this.save()
-        },
+        // onChange: (args) => {
+        //   console.log('Now I know that Editor\'s content changed!', args)
+        //   //  this.save()
+        // },
         dataEmpty:{
-
+          "time": 1591362820044,
+          "blocks": [
+            {
+              "type" : "header",
+              "data" : {
+                "text" : "Editor.js",
+                "level" : 2
+              }
+            }
+          ],
+          "version" : "2.18.0"
         },
         data: {
           "time": 1591362820044,
@@ -266,25 +298,49 @@ export default {
     }
   },
   methods: {
+    nouveau(){
+
+      this.path = this.url.substring(0, this.url.lastIndexOf('/')+1);
+      console.log(this.path)
+      this.$bvModal.show('modal-filename')
+      //this.config.data = this.config.dataEmpty
+
+      this.$refs.editor.state.editor.clear()
+    this.$refs.editor.state.editor.render()
+      //  console.log(this.config.data)
+        //  this.$refs.editor.render()
+    },
     async update() {
       this.url = this.$route.query.url
-      console.log(this.url)
+      console.log("URL",this.url)
       this.url.endsWith('/') == true ? this.folder = await fc.readFolder(this.url) : this.file = await fc.readFile(this.url)
       console.log(this.folder)
-      console.log(this.file)
+      console.log(this.file, this.url.endsWith('.json'))
+      console.log("state",this.$refs.editor.state)
+      if (this.url.endsWith('.json') == true){
+        console.log('CHARGE',JSON.parse(this.file))
+        this.$refs.editor.config.data = JSON.parse(this.file)
+        try{
+          this.$refs.editor.state.editor.render()
+          console.log('CHARGE')
+        }catch(e){
+          console.log(e)
+        }
+
+      }
     },
-    onInitialized(ed){
-      console.log(ed)
-    },
-    async save(){
+    // onInitialized(ed){
+    //   console.log(ed)
+    // },
+    async saveFile(){
       try{
         const response = await this.$refs.editor.state.editor.save().then((res)=>res);
 
-        let path = this.url.substring(0, this.url.lastIndexOf('/')+1)+'doc_blocks.json';
-        console.log(path)
+        //  let path = this.url.substring(0, this.url.lastIndexOf('/')+1)+'doc_blocks.json';
+        console.log(this.path)
         try{
-          await fc.createFile( path, JSON.stringify(response), 'text/x-json' )
-          alert(path+" sauvegardé")
+          await fc.createFile( this.path+this.filename+'.json', JSON.stringify(response), 'text/x-json' )
+          alert(this.path+" sauvegardé")
         }
         catch(e){
           alert(e)

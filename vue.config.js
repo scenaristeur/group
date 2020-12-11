@@ -38,7 +38,9 @@ module.exports = {
 },
 "transpileDependencies": [
   "vuetify"
-]
+],
+// pour ipfs ? https://github.com/ipfs/js-ipfs/blob/master/examples/browser-vue/vue.config.js
+chainWebpack: config => config.resolve.symlinks(false),
 // chainWebpack: config => {
 //   //http://kazupon.github.io/vue-i18n/guide/sfc.html#webpack
 //   config.module

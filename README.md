@@ -61,3 +61,34 @@ npm run git -- "new version"
 
 ### Calendrier
 https://github.com/ahmadissa/dayspan-vuetify-2/tree/gh-pages
+
+### a look at ipfs
+https://ideea.io/vipfs/getting-started-tutorial   https://github.com/Ideea-inc/vipfs
+browser https://www.npmjs.com/package/ipfs-vue
+contracts : https://github.com/redacademy/vue-ethereum-ipfs
+
+https://github.com/ipfs/js-ipfs/tree/c3c46073d31445411bf1f379f05c562eb628c860/examples/browser-vue
+
+https://gist.github.com/MaiaVictor/b8a4a44005c7a5243ce0150585a4d48b
+```
+
+const ipfs = require("nano-ipfs-store").at("https://ipfs.infura.io:5001");
+
+(async () => {
+
+  const doc = JSON.stringify({
+    foo: "bar",
+    tic: "tac"
+  });
+
+  const cid = await ipfs.add(doc);
+
+  console.log("IPFS cid:", cid);
+
+  console.log(await ipfs.cat(cid));
+
+})();
+```
+https://www.tooploox.com/blog/using-ipfs-with-ethereum-for-data-storage
+
+https://ethereum.stackexchange.com/questions/39141/creating-a-form-in-ipfs-for-users-to-enter-data/39205
